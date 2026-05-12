@@ -256,9 +256,16 @@ export class DashboardComponent implements AfterViewInit {
       cumulative += dept.count;
       const endAngle = (cumulative / total) * 360 - 90;
 
-      const start = this.polarToCartesian(80, 80, 65, endAngle);
-      const end = this.polarToCartesian(80, 80, 65, startAngle);
-      const largeArc = endAngle - startAngle > 180 ? 1 : 0;
+      // Subtract 2 degrees from endAngle to create a small gap
+      const start = this.polarToCartesian(80, 80, 65, startAngle);
+      let end = this.polarToCartesian(80, 80, 65, endAngle - 3);
+      
+      // If there is only 1 item or it takes up the whole circle, don't leave a gap
+      if (depts.length === 1) {
+        end = this.polarToCartesian(80, 80, 65, endAngle - 0.01);
+      }
+      
+      const largeArc = (endAngle - 3) - startAngle > 180 ? 1 : 0;
 
       arcs.push({
         path: `M ${start.x} ${start.y} A 65 65 0 ${largeArc} 0 ${end.x} ${end.y}`,

@@ -79,8 +79,9 @@
           <thead>
             <tr>
               <th>Name</th>
-              <th>Group</th>
-              <th>Email</th>
+              <th>Department</th>
+              <th>Position</th>
+              <th>Joined Date</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -94,7 +95,8 @@
                   </div>
                 </td>
                 <td>{{ emp.group }}</td>
-                <td>{{ emp.email }}</td>
+                <td>{{ emp.username }}</td>
+                <td>{{ emp.description | date:'MMM dd, yyyy' }}</td>
                 <td><app-status-badge [status]="emp.status" /></td>
               </tr>
             }
