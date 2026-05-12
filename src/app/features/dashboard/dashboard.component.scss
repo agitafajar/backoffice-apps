@@ -1,28 +1,329 @@
-.placeholder-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 80px 24px;
-      background: white;
-      border: 1px solid #E0E0E0;
-      border-radius: 12px;
-      text-align: center;
-      color: #94A3B8;
+// ============================================================
+// Dashboard Styles
+// ============================================================
 
-      mat-icon {
-        font-size: 48px;
-        width: 48px;
-        height: 48px;
-        margin-bottom: 12px;
-      }
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
 
-      h3 {
-        font-size: 1.125rem;
-        font-weight: 600;
-        color: #1E293B;
-        margin: 0 0 8px;
-      }
+// ── Header ──────────────────────────────────────────────────
+.dashboard__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1E293B;
+  margin: 0 0 4px;
+}
 
-      p { margin: 0; font-size: 0.875rem; }
-    }
+.dashboard__subtitle {
+  font-size: 0.875rem;
+  color: #64748B;
+  margin: 0;
+}
+
+// ── Stats Grid ──────────────────────────────────────────────
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+  }
+}
+
+.stat-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.stat-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat-card__label {
+  font-size: 0.8125rem;
+  color: #64748B;
+  font-weight: 500;
+}
+
+.stat-card__value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1E293B;
+  line-height: 1.2;
+}
+
+.stat-card__trend {
+  font-size: 0.75rem;
+  font-weight: 500;
+
+  &--up {
+    color: #22C55E;
+  }
+
+  &--down {
+    color: #F97316;
+  }
+}
+
+// ── Chart Cards ─────────────────────────────────────────────
+.chart-card {
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.chart-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.chart-card__title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: #1E293B;
+  margin: 0;
+}
+
+.chart-card__link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #3B82F6;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.chart-card__filter {
+  font-size: 0.8125rem !important;
+  color: #64748B !important;
+  border-color: #E2E8F0 !important;
+  border-radius: 8px !important;
+  padding: 4px 12px !important;
+  line-height: 1.4 !important;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    margin-left: 4px;
+  }
+}
+
+// ── Charts Row ──────────────────────────────────────────────
+.charts-row {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 20px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.growth-canvas {
+  width: 100%;
+  height: 220px;
+  display: block;
+}
+
+// ── Donut ───────────────────────────────────────────────────
+.donut-body {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
+}
+
+.donut-chart {
+  width: 160px;
+  height: 160px;
+  flex-shrink: 0;
+}
+
+.donut-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-name {
+  color: #1E293B;
+  font-weight: 500;
+  flex: 1;
+}
+
+.legend-value {
+  color: #64748B;
+  white-space: nowrap;
+}
+
+// ── Bottom Row ──────────────────────────────────────────────
+.bottom-row {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 20px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ── Recent Employees Table ──────────────────────────────────
+.recent-table {
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th {
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 8px 12px 12px;
+    border-bottom: 1px solid #E2E8F0;
+  }
+
+  td {
+    padding: 12px;
+    font-size: 0.8125rem;
+    color: #1E293B;
+    border-bottom: 1px solid #F1F5F9;
+    vertical-align: middle;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+.recent-employee {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+// ── Events List ─────────────────────────────────────────────
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.event-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.event-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 56px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  color: white;
+}
+
+.event-date__month {
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.event-date__day {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.event-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.event-info__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1E293B;
+}
+
+.event-info__time {
+  font-size: 0.75rem;
+  color: #64748B;
+}

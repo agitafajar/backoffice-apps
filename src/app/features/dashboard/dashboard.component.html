@@ -1,6 +1,128 @@
-<app-page-header title="Dashboard" subtitle="Overview of your HR metrics and activities." />
-    <div class="placeholder-card">
-      <mat-icon>dashboard</mat-icon>
-      <h3>Dashboard</h3>
-      <p>Dashboard analytics coming soon.</p>
+<div class="dashboard">
+  <!-- Page Header -->
+  <div class="dashboard__header">
+    <h1 class="dashboard__title">Dashboard</h1>
+    <p class="dashboard__subtitle">Overview of your HR metrics and activities.</p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    @for (stat of stats(); track stat.label) {
+      <div class="stat-card">
+        <div class="stat-card__icon" [style.background]="stat.color">
+          <mat-icon [style.color]="stat.iconColor">{{ stat.icon }}</mat-icon>
+        </div>
+        <div class="stat-card__content">
+          <span class="stat-card__label">{{ stat.label }}</span>
+          <span class="stat-card__value">{{ stat.value }}</span>
+          <span class="stat-card__trend" [class.stat-card__trend--up]="stat.trendUp" [class.stat-card__trend--down]="!stat.trendUp">
+            {{ stat.trend }}
+          </span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Charts Row -->
+  <div class="charts-row">
+    <!-- Employee Growth Chart -->
+    <div class="chart-card chart-card--growth">
+      <div class="chart-card__header">
+        <h3 class="chart-card__title">Employee Growth</h3>
+        <button mat-stroked-button class="chart-card__filter">
+          This Year
+          <mat-icon>expand_more</mat-icon>
+        </button>
+      </div>
+      <div class="chart-card__body">
+        <canvas #chartCanvas class="growth-canvas"></canvas>
+      </div>
     </div>
+
+    <!-- Departments Donut -->
+    <div class="chart-card chart-card--departments">
+      <div class="chart-card__header">
+        <h3 class="chart-card__title">Departments</h3>
+        <a routerLink="/employees" class="chart-card__link">View all</a>
+      </div>
+      <div class="chart-card__body donut-body">
+        <div class="donut-chart">
+          <svg viewBox="0 0 160 160" class="donut-svg">
+            @for (arc of donutArcs(); track arc.color) {
+              <path [attr.d]="arc.path" fill="none" [attr.stroke]="arc.color" stroke-width="24" stroke-linecap="butt" />
+            }
+          </svg>
+        </div>
+        <div class="donut-legend">
+          @for (dept of departments(); track dept.name) {
+            <div class="legend-item">
+              <span class="legend-dot" [style.background]="dept.color"></span>
+              <span class="legend-name">{{ dept.name }}</span>
+              <span class="legend-value">{{ dept.count }} ({{ dept.percentage }}%)</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Row -->
+  <div class="bottom-row">
+    <!-- Recent Employees -->
+    <div class="chart-card chart-card--recent">
+      <div class="chart-card__header">
+        <h3 class="chart-card__title">Recent Employees</h3>
+        <a routerLink="/employees" class="chart-card__link">View all</a>
+      </div>
+      <div class="recent-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Group</th>
+              <th>Email</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (emp of recentEmployees(); track emp.id) {
+              <tr>
+                <td>
+                  <div class="recent-employee">
+                    <app-avatar [name]="emp.firstName + ' ' + emp.lastName" [size]="32" />
+                    <span>{{ emp.firstName }} {{ emp.lastName }}</span>
+                  </div>
+                </td>
+                <td>{{ emp.group }}</td>
+                <td>{{ emp.email }}</td>
+                <td><app-status-badge [status]="emp.status" /></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Upcoming Events -->
+    <div class="chart-card chart-card--events">
+      <div class="chart-card__header">
+        <h3 class="chart-card__title">Upcoming Events</h3>
+        <a href="javascript:void(0)" class="chart-card__link">View all</a>
+      </div>
+      <div class="events-list">
+        @for (event of events; track event.title) {
+          <div class="event-item">
+            <div class="event-date" [style.background]="event.color">
+              <span class="event-date__month">{{ event.month }}</span>
+              <span class="event-date__day">{{ event.day }}</span>
+            </div>
+            <div class="event-info">
+              <span class="event-info__title">{{ event.title }}</span>
+              <span class="event-info__time">{{ event.time }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
