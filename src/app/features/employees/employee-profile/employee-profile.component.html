@@ -1,176 +1,104 @@
 @if (employee()) {
-      <div class="profile">
-        <!-- Back link + actions -->
-        <div class="profile__toolbar">
-          <a routerLink="/employees" class="profile__back">
-            <mat-icon>arrow_back</mat-icon>
-            Back to Employees
-          </a>
-          <div class="profile__toolbar-actions">
-            <button mat-stroked-button id="btn-edit-profile">Edit Profile</button>
-            <button
-              mat-flat-button
-              color="primary"
-              [matMenuTriggerFor]="actionsMenu"
-              id="btn-profile-actions"
-            >
-              Actions
-              <mat-icon>expand_more</mat-icon>
-            </button>
-            <mat-menu #actionsMenu="matMenu">
-              <button mat-menu-item><mat-icon>email</mat-icon> Send Email</button>
-              <button mat-menu-item><mat-icon>event</mat-icon> Schedule Meeting</button>
-              <button mat-menu-item><mat-icon>assignment</mat-icon> Assign Task</button>
-              <mat-divider></mat-divider>
-              <button mat-menu-item class="text-error"><mat-icon>block</mat-icon> Deactivate</button>
-            </mat-menu>
-          </div>
+  <div class="profile">
+    <!-- Back link + actions -->
+    <div class="profile__toolbar">
+      <!-- Changed from 'Back to Employees' to 'OK' button based on requirements -->
+      <button mat-flat-button color="primary" (click)="goBack()" class="profile__ok-btn">
+        <mat-icon>check</mat-icon>
+        OK
+      </button>
+
+      <div class="profile__toolbar-actions">
+        <button mat-stroked-button id="btn-edit-profile">Edit Profile</button>
+        <button
+          mat-flat-button
+          color="primary"
+          [matMenuTriggerFor]="actionsMenu"
+          id="btn-profile-actions"
+        >
+          Actions
+          <mat-icon>expand_more</mat-icon>
+        </button>
+        <mat-menu #actionsMenu="matMenu">
+          <button mat-menu-item><mat-icon>email</mat-icon> Send Email</button>
+          <button mat-menu-item><mat-icon>event</mat-icon> Schedule Meeting</button>
+          <button mat-menu-item><mat-icon>assignment</mat-icon> Assign Task</button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item class="text-error"><mat-icon>block</mat-icon> Deactivate</button>
+        </mat-menu>
+      </div>
+    </div>
+
+    <!-- Profile header -->
+    <div class="profile__header">
+      <app-avatar
+        [name]="employee()!.firstName + ' ' + employee()!.lastName"
+        [size]="80"
+      />
+      <div class="profile__header-info">
+        <div class="profile__name-row">
+          <h2 class="profile__name">
+            {{ employee()!.firstName }} {{ employee()!.lastName }}
+          </h2>
+          <app-status-badge [status]="employee()!.status" />
         </div>
-
-        <!-- Profile header -->
-        <div class="profile__header">
-          <app-avatar
-            [name]="employee()!.firstName + ' ' + employee()!.lastName"
-            [src]="employee()!.avatarUrl"
-            [size]="80"
-          />
-          <div class="profile__header-info">
-            <div class="profile__name-row">
-              <h2 class="profile__name">
-                {{ employee()!.firstName }} {{ employee()!.lastName }}
-              </h2>
-              <app-status-badge [status]="employee()!.status" />
-            </div>
-            <p class="profile__role">
-              {{ employee()!.jobTitle }} • {{ employee()!.department }}
-            </p>
-            <div class="profile__meta">
-              <span class="profile__meta-item">
-                <mat-icon>badge</mat-icon>
-                {{ employee()!.employeeId }}
-              </span>
-              @if (employee()!.location) {
-                <span class="profile__meta-item">
-                  <mat-icon>location_on</mat-icon>
-                  {{ employee()!.location }}
-                </span>
-              }
-              <span class="profile__meta-item">
-                <mat-icon>calendar_today</mat-icon>
-                Started {{ employee()!.startDate | date:'mediumDate' }}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Content grid -->
-        <div class="profile__grid">
-          <!-- Left column -->
-          <div class="profile__main">
-            <!-- Employment History -->
-            @if (employee()!.employmentHistory?.length) {
-              <section class="card">
-                <h3 class="card__title">Employment History</h3>
-                <div class="timeline">
-                  @for (entry of employee()!.employmentHistory; track entry.title) {
-                    <div class="timeline__item">
-                      <div class="timeline__dot" [class.timeline__dot--active]="entry.isCurrent"></div>
-                      <div class="timeline__content">
-                        <h4 class="timeline__role">{{ entry.title }}</h4>
-                        <p class="timeline__period">
-                          {{ entry.startDate }} - {{ entry.endDate || 'Present' }}
-                          • {{ entry.duration }}
-                        </p>
-                        <p class="timeline__desc">{{ entry.description }}</p>
-                      </div>
-                    </div>
-                  }
-                </div>
-              </section>
-            }
-
-            <!-- Compensation -->
-            @if (employee()!.annualBaseSalary) {
-              <section class="card">
-                <h3 class="card__title">Compensation</h3>
-                <div class="comp-grid">
-                  <div>
-                    <span class="comp-label">Annual Base Salary</span>
-                    <span class="comp-value">{{ employee()!.annualBaseSalary | currency:'USD':'symbol':'1.2-2' }}</span>
-                    @if (employee()!.lastSalaryUpdate) {
-                      <span class="comp-sub">Last updated: {{ employee()!.lastSalaryUpdate | date:'mediumDate' }}</span>
-                    }
-                  </div>
-                  <div>
-                    <span class="comp-label">Pay Frequency</span>
-                    <span class="comp-freq">{{ employee()!.payFrequency }}</span>
-                  </div>
-                </div>
-              </section>
-            }
-          </div>
-
-          <!-- Right column -->
-          <div class="profile__aside">
-            <!-- Contact Info -->
-            <section class="card">
-              <h3 class="card__title">Contact Info</h3>
-              <div class="contact-list">
-                <div class="contact-item">
-                  <span class="contact-item__label">Email Address</span>
-                  <a [href]="'mailto:' + employee()!.email" class="contact-item__value contact-item__link">
-                    {{ employee()!.email }}
-                    <mat-icon class="contact-item__copy" matTooltip="Copy email">content_copy</mat-icon>
-                  </a>
-                </div>
-                <div class="contact-item">
-                  <span class="contact-item__label">Phone Number</span>
-                  <span class="contact-item__value">{{ employee()!.phone }}</span>
-                </div>
-                @if (employee()!.location) {
-                  <div class="contact-item">
-                    <span class="contact-item__label">Location</span>
-                    <span class="contact-item__value">{{ employee()!.location }}</span>
-                    @if (employee()!.floor && employee()!.desk) {
-                      <span class="contact-item__sub">{{ employee()!.floor }}, {{ employee()!.desk }}</span>
-                    }
-                  </div>
-                }
-                @if (employee()!.timezone) {
-                  <div class="contact-item">
-                    <span class="contact-item__label">Timezone</span>
-                    <span class="contact-item__value">{{ employee()!.timezone }}</span>
-                  </div>
-                }
-              </div>
-            </section>
-
-            <!-- Reporting Line -->
-            @if (employee()!.managerName) {
-              <section class="card">
-                <h3 class="card__title">Reporting Line</h3>
-                <div class="report-manager">
-                  <span class="report-label">Direct Manager</span>
-                  <div class="report-person">
-                    <app-avatar
-                      [name]="employee()!.managerName!"
-                      [size]="40"
-                    />
-                    <div>
-                      <span class="report-person__name">{{ employee()!.managerName }}</span>
-                      <span class="report-person__title">{{ employee()!.managerTitle }}</span>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            }
-          </div>
+        <p class="profile__role">
+          {{ employee()!.group }}
+        </p>
+        <div class="profile__meta">
+          <span class="profile__meta-item">
+            <mat-icon>person</mat-icon>
+            {{ employee()!.username }}
+          </span>
+          <span class="profile__meta-item">
+            <mat-icon>cake</mat-icon>
+            {{ employee()!.birthDate | date:'longDate' }}
+          </span>
         </div>
       </div>
-    } @else {
-      <div class="profile-empty">
-        <mat-icon>person_off</mat-icon>
-        <p>Employee not found.</p>
-        <a routerLink="/employees" mat-stroked-button>Back to Directory</a>
+    </div>
+
+    <!-- Content grid -->
+    <div class="profile__grid">
+      <!-- Left column -->
+      <div class="profile__main">
+        <!-- Details -->
+        <section class="card">
+          <h3 class="card__title">Employee Details</h3>
+          <div class="contact-list">
+            <div class="contact-item">
+              <span class="contact-item__label">Email Address</span>
+              <span class="contact-item__value">{{ employee()!.email }}</span>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item__label">Group</span>
+              <span class="contact-item__value">{{ employee()!.group }}</span>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item__label">Description Date</span>
+              <span class="contact-item__value">{{ employee()!.description | date:'medium' }}</span>
+            </div>
+          </div>
+        </section>
       </div>
-    }
+
+      <!-- Right column -->
+      <div class="profile__aside">
+        <!-- Compensation -->
+        <section class="card">
+          <h3 class="card__title">Compensation</h3>
+          <div>
+            <span class="comp-label">Basic Salary</span>
+            <span class="comp-value">{{ formatRupiah(employee()!.basicSalary) }}</span>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="profile-empty">
+    <mat-icon>person_off</mat-icon>
+    <p>Employee not found.</p>
+    <button mat-stroked-button (click)="goBack()">Back to Directory</button>
+  </div>
+}

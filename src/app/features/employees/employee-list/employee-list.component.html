@@ -1,160 +1,141 @@
-<div class="employee-list">
-      <!-- Page Header -->
-      <app-page-header
-        title="Directory"
-        subtitle="Manage and view all active and onboarding personnel."
-      >
-        <button
-          mat-flat-button
-          color="primary"
-          routerLink="/employees/add"
-          id="btn-add-employee"
-        >
-          <mat-icon>add</mat-icon>
-          Add Employee
-        </button>
-      </app-page-header>
+<div class="page-container">
+  <!-- Header -->
+  <div class="list-header">
+    <div class="list-header__text">
+      <h2 class="list-header__title">Employee Directory</h2>
+      <p class="list-header__subtitle">Manage your workforce, view details, and handle records.</p>
+    </div>
+    <div class="list-header__actions">
+      <button mat-stroked-button class="btn-export">
+        <mat-icon>download</mat-icon>
+        Export
+      </button>
+      <button mat-flat-button color="primary" class="btn-add" routerLink="/employees/add">
+        <mat-icon>add</mat-icon>
+        Add Employee
+      </button>
+    </div>
+  </div>
 
-      <!-- Filters bar -->
-      <div class="filters-bar">
-        <div class="filters-bar__search">
-          <mat-icon class="filters-bar__search-icon">search</mat-icon>
-          <input
-            type="text"
-            class="filters-bar__search-input"
-            placeholder="Search by name, role, or email..."
-            [ngModel]="searchQuery"
-            (ngModelChange)="onSearchChange($event)"
-            id="employee-search"
-          />
-        </div>
-
-        <div class="filters-bar__selects">
-          <div class="filter-chip" [matMenuTriggerFor]="deptMenu">
-            <mat-icon class="filter-chip__icon">filter_list</mat-icon>
-            <span>{{ selectedDepartment || 'Department' }}</span>
-            <mat-icon class="filter-chip__arrow">expand_more</mat-icon>
-          </div>
-          <mat-menu #deptMenu="matMenu">
-            <button mat-menu-item (click)="onDepartmentChange('')">All Departments</button>
-            @for (dept of employeeService.departments(); track dept) {
-              <button mat-menu-item (click)="onDepartmentChange(dept)">{{ dept }}</button>
-            }
-          </mat-menu>
-
-          <div class="filter-chip" [matMenuTriggerFor]="statusMenu">
-            <mat-icon class="filter-chip__icon">tune</mat-icon>
-            <span>{{ selectedStatus || 'Status' }}</span>
-            <mat-icon class="filter-chip__arrow">expand_more</mat-icon>
-          </div>
-          <mat-menu #statusMenu="matMenu">
-            <button mat-menu-item (click)="onStatusChange('')">All Statuses</button>
-            <button mat-menu-item (click)="onStatusChange('Active')">Active</button>
-            <button mat-menu-item (click)="onStatusChange('Onboarding')">Onboarding</button>
-            <button mat-menu-item (click)="onStatusChange('Leave')">Leave</button>
-          </mat-menu>
-        </div>
+  <!-- Filters & Search -->
+  <div class="filter-bar">
+    <div class="filter-bar__search-group">
+      <div class="search-input">
+        <mat-icon>search</mat-icon>
+        <input 
+          type="text" 
+          placeholder="Search username..." 
+          [value]="employeeService.currentSearchUsername()"
+          (keyup)="onSearchUser($event)"
+        />
       </div>
-
-      <!-- Table -->
-      <div class="table-wrapper">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th class="data-table__th">
-                Name
-                <mat-icon class="data-table__sort-icon">arrow_upward</mat-icon>
-              </th>
-              <th class="data-table__th">Role</th>
-              <th class="data-table__th">Department</th>
-              <th class="data-table__th">Status</th>
-              <th class="data-table__th data-table__th--actions">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (employee of employeeService.paginatedEmployees(); track employee.id) {
-              <tr
-                class="data-table__row"
-                [routerLink]="['/employees', employee.id]"
-              >
-                <td class="data-table__td">
-                  <div class="employee-cell">
-                    <app-avatar
-                      [name]="employee.firstName + ' ' + employee.lastName"
-                      [src]="employee.avatarUrl"
-                      [size]="36"
-                    />
-                    <div class="employee-cell__info">
-                      <span class="employee-cell__name">
-                        {{ employee.firstName }} {{ employee.lastName }}
-                      </span>
-                      <span class="employee-cell__email">{{ employee.email }}</span>
-                    </div>
-                  </div>
-                </td>
-                <td class="data-table__td">{{ employee.jobTitle }}</td>
-                <td class="data-table__td">{{ employee.department }}</td>
-                <td class="data-table__td">
-                  <app-status-badge [status]="employee.status" />
-                </td>
-                <td class="data-table__td data-table__td--actions" (click)="$event.stopPropagation()">
-                  <button mat-icon-button [matMenuTriggerFor]="actionMenu" class="action-btn">
-                    <mat-icon>more_horiz</mat-icon>
-                  </button>
-                  <mat-menu #actionMenu="matMenu">
-                    <button mat-menu-item [routerLink]="['/employees', employee.id]">
-                      <mat-icon>visibility</mat-icon> View Profile
-                    </button>
-                    <button mat-menu-item>
-                      <mat-icon>edit</mat-icon> Edit
-                    </button>
-                    <button mat-menu-item class="text-error">
-                      <mat-icon>delete</mat-icon> Remove
-                    </button>
-                  </mat-menu>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Pagination -->
-      <div class="pagination">
-        <span class="pagination__info">
-          Showing {{ paginationStart }} to {{ paginationEnd }} of {{ employeeService.totalFiltered() }} entries
-        </span>
-        <div class="pagination__controls">
-          <button
-            mat-icon-button
-            [disabled]="employeeService.currentPage() <= 1"
-            (click)="employeeService.setPage(employeeService.currentPage() - 1)"
-          >
-            <mat-icon>chevron_left</mat-icon>
-          </button>
-
-          @for (page of pages; track page) {
-            @if (page === -1) {
-              <span class="pagination__dots">...</span>
-            } @else {
-              <button
-                mat-icon-button
-                class="pagination__page"
-                [class.pagination__page--active]="page === employeeService.currentPage()"
-                (click)="employeeService.setPage(page)"
-              >
-                {{ page }}
-              </button>
-            }
-          }
-
-          <button
-            mat-icon-button
-            [disabled]="employeeService.currentPage() >= employeeService.totalPages()"
-            (click)="employeeService.setPage(employeeService.currentPage() + 1)"
-          >
-            <mat-icon>chevron_right</mat-icon>
-          </button>
-        </div>
+      <div class="search-input">
+        <mat-icon>group</mat-icon>
+        <input 
+          type="text" 
+          placeholder="Search group..." 
+          [value]="employeeService.currentSearchGroup()"
+          (keyup)="onSearchGroup($event)"
+        />
       </div>
     </div>
+    
+    <div class="filter-bar__dropdowns">
+      <mat-form-field appearance="outline" class="density-compact">
+        <mat-select 
+          placeholder="All Statuses" 
+          [value]="employeeService.currentStatusFilter()"
+          (selectionChange)="onStatusFilter($event.value)"
+        >
+          <mat-option value="">All Statuses</mat-option>
+          <mat-option value="Active">Active</mat-option>
+          <mat-option value="Inactive">Inactive</mat-option>
+          <mat-option value="On Leave">On Leave</mat-option>
+          <mat-option value="Onboarding">Onboarding</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Data Table -->
+  <div class="table-container mat-elevation-z1">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <!-- Username Column -->
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
+        <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="employee-cell">
+            <div class="employee-cell__info">
+              <span class="employee-cell__name">{{element.firstName}} {{element.lastName}}</span>
+              <span class="employee-cell__email">{{element.email}}</span>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Basic Salary Column -->
+      <ng-container matColumnDef="basicSalary">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Basic Salary </th>
+        <td mat-cell *matCellDef="let element"> 
+          {{ formatRupiah(element.basicSalary) }}
+        </td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let element">
+          <app-status-badge [status]="element.status"></app-status-badge>
+        </td>
+      </ng-container>
+
+      <!-- Group Column -->
+      <ng-container matColumnDef="group">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Group </th>
+        <td mat-cell *matCellDef="let element"> {{element.group}} </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="actions-header"> Action </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="actions-cell">
+            <!-- Navigate to Detail Page on view, edit and delete handled by component -->
+            <button mat-icon-button color="primary" [routerLink]="['/employees', element.id]" matTooltip="View Details">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button class="text-warning" (click)="editEmployee(element)" matTooltip="Edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteEmployee(element)" matTooltip="Delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="employee-row"></tr>
+
+      <!-- No Data Row -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell text-center py-8 text-gray-500" colspan="6">
+          No employees found matching the current filters.
+        </td>
+      </tr>
+    </table>
+
+    <mat-paginator 
+      [pageSizeOptions]="[10, 25, 50, 100]" 
+      showFirstLastButtons 
+      aria-label="Select page of employees">
+    </mat-paginator>
+  </div>
+</div>

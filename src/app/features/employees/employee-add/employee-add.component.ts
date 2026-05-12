@@ -1,15 +1,16 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+import { MatDividerModule } from '@angular/material/divider';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { EmployeeService } from '../../../core/services/employee.service';
 
@@ -18,15 +19,17 @@ import { EmployeeService } from '../../../core/services/employee.service';
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonModule,
-    MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatButtonModule,
+    MatIconModule,
     MatSnackBarModule,
+    MatDividerModule,
     PageHeaderComponent,
   ],
   templateUrl: './employee-add.component.html',
@@ -38,49 +41,41 @@ export class EmployeeAddComponent {
   private readonly employeeService = inject(EmployeeService);
   private readonly snackBar = inject(MatSnackBar);
 
-  form = this.fb.group({
+  // Groups and filtered groups
+  readonly allGroups = ['Engineering', 'Product', 'Design', 'Marketing', 'Sales', 'HR', 'Finance', 'Operations', 'Legal', 'Customer Success'];
+  filteredGroups = [...this.allGroups];
+
+  today = new Date();
+
+  employeeForm = this.fb.group({
+    username: ['', [Validators.required]],
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    phone: [''],
-    dateOfBirth: [''],
-    department: ['', Validators.required],
-    jobTitle: ['', Validators.required],
-    startDate: ['', Validators.required],
-    employmentType: ['Full-Time'],
-    annualBaseSalary: [null as number | null],
-    payFrequency: ['Monthly'],
+    birthDate: [null as Date | null, Validators.required],
+    basicSalary: [null as number | null, [Validators.required, Validators.pattern('^[0-9]+$')]],
+    status: ['Active', Validators.required],
+    group: ['', Validators.required],
+    description: [null as Date | null, Validators.required],
   });
 
-  onSubmit(): void {
-    if (this.form.valid) {
-      const v = this.form.getRawValue();
-      this.employeeService.addEmployee({
-        firstName: v.firstName!,
-        lastName: v.lastName!,
-        email: v.email!,
-        phone: v.phone || '',
-        dateOfBirth: v.dateOfBirth || '',
-        department: v.department!,
-        jobTitle: v.jobTitle!,
-        startDate: v.startDate!,
-        employmentType: v.employmentType as any,
-        status: 'Onboarding',
-        annualBaseSalary: v.annualBaseSalary ?? undefined,
-        payFrequency: v.payFrequency as any,
-        avatarUrl: '',
-        employmentHistory: [],
-      });
+  onGroupSearch(event: Event): void {
+    const term = (event.target as HTMLInputElement).value.toLowerCase();
+    this.filteredGroups = this.allGroups.filter(g => g.toLowerCase().includes(term));
+  }
 
-      this.snackBar.open(
-        `✅ ${v.firstName} ${v.lastName} has been successfully added to the directory.`,
-        '✕',
-        { duration: 4000, panelClass: ['success-snackbar'] }
-      );
+  onSubmit(): void {
+    if (this.employeeForm.valid) {
+      this.employeeService.addEmployee(this.employeeForm.value as any);
+      
+      this.snackBar.open('Employee added successfully', 'Close', {
+        duration: 3000,
+        panelClass: ['success-snackbar']
+      });
 
       this.router.navigate(['/employees']);
     } else {
-      this.form.markAllAsTouched();
+      this.employeeForm.markAllAsTouched();
     }
   }
 }

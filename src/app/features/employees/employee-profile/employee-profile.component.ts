@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
+import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -24,12 +24,14 @@ import { Employee } from '../../../core/models/employee.model';
     MatDividerModule,
     AvatarComponent,
     StatusBadgeComponent,
+    DatePipe
   ],
   templateUrl: './employee-profile.component.html',
   styleUrl: './employee-profile.component.scss',
 })
 export class EmployeeProfileComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   private readonly employeeService = inject(EmployeeService);
 
   employee = signal<Employee | undefined>(undefined);
@@ -39,5 +41,19 @@ export class EmployeeProfileComponent implements OnInit {
     if (id) {
       this.employee.set(this.employeeService.getById(id));
     }
+  }
+
+  formatRupiah(amount: number | undefined): string {
+    if (!amount) return 'Rp. 0,00';
+    const formatted = new Intl.NumberFormat('id-ID', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(amount);
+    return `Rp. ${formatted}`;
+  }
+
+  goBack(): void {
+    // Navigate back to list, state is preserved in the service
+    this.router.navigate(['/employees']);
   }
 }

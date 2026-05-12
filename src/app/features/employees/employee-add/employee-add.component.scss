@@ -1,63 +1,53 @@
-.employee-add {
-      max-width: 720px;
-    }
+.section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1E293B;
+  margin: 0 0 20px;
+}
 
-    .form-sections {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 
-    .form-section {
-      background: white;
-      border: 1px solid #E0E0E0;
-      border-radius: 12px;
-      padding: 24px;
-    }
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #E0E0E0;
+}
 
-    .form-section__title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #1E293B;
-      margin: 0 0 20px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #F5F5F5;
-    }
-
-    .form-grid {
-      display: grid;
-      gap: 0 20px;
-    }
-
-    .form-grid--2col {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .salary-prefix {
-      font-size: 0.875rem;
-      color: #64748B;
-    }
-
-    .form-actions {
-      display: flex;
-      justify-content: flex-start;
-      padding-top: 8px;
-    }
-
-    .submit-btn {
-      height: 42px !important;
-      padding: 0 28px !important;
-      font-size: 0.875rem !important;
-      font-weight: 600 !important;
-      border-radius: 8px !important;
-    }
-
-    @media (max-width: 640px) {
-      .form-grid--2col {
-        grid-template-columns: 1fr;
-      }
-
-      .form-section {
-        padding: 16px;
-      }
-    }
+// Custom style for the search input inside mat-select
+.select-search {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-bottom: 1px solid #E0E0E0;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  
+  mat-icon {
+    color: #94A3B8;
+    margin-right: 8px;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+  
+  input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 0.875rem;
+    padding: 8px 0;
+  }
+}

@@ -258,3 +258,16 @@ html, body {
 ::-webkit-scrollbar-thumb:hover {
   background: #94A3B8;
 }
+
+// Custom Snackbars
+.snackbar-warning {
+  --mdc-snackbar-container-color: #F59E0B;
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-snack-bar-button-color: white;
+}
+
+.snackbar-error {
+  --mdc-snackbar-container-color: #EF4444;
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-snack-bar-button-color: white;
+}

@@ -10,22 +10,19 @@
 
       <!-- Form -->
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-card__form">
-        <!-- Employee ID / Email -->
+        <!-- Username -->
         <div class="form-group">
-          <label class="form-label">Employee ID or Email</label>
+          <label class="form-label">Username</label>
           <mat-form-field appearance="outline">
             <mat-icon matPrefix>person_outline</mat-icon>
             <input
               matInput
-              formControlName="email"
-              placeholder="e.g. jdoe@company.com"
-              id="login-email"
+              formControlName="username"
+              placeholder="e.g. jdoe123"
+              id="login-username"
             />
-            @if (loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
-              <mat-error>Email is required</mat-error>
-            }
-            @if (loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched) {
-              <mat-error>Enter a valid email address</mat-error>
+            @if (loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched) {
+              <mat-error>Username is required</mat-error>
             }
           </mat-form-field>
         </div>
