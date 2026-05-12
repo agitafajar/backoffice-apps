@@ -1,29 +1,176 @@
+// Breadcrumbs
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  margin-bottom: 8px;
+
+  .breadcrumb-link {
+    color: #3B82F6;
+    text-decoration: none;
+    font-weight: 500;
+    &:hover { text-decoration: underline; }
+  }
+
+  .breadcrumb-separator {
+    color: #94A3B8;
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 4px;
+  }
+
+  .breadcrumb-current {
+    color: #64748B;
+  }
+}
+
+// Form Card
+.form-card {
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 32px;
+  margin-top: 24px;
+}
+
+// Section Header
+.form-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.section-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  &.blue-bg {
+    background: #EBF5FF;
+    color: #3B82F6;
+  }
+
+  &.purple-bg {
+    background: #F5F3FF;
+    color: #8B5CF6;
+  }
+}
+
 .section-title {
   font-size: 1.125rem;
   font-weight: 600;
   color: #1E293B;
-  margin: 0 0 20px;
+  margin: 0;
 }
 
+.section-divider {
+  margin: 32px 0;
+  border-color: #E2E8F0;
+}
+
+// Form Grid
 .form-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 24px;
 
   @media (min-width: 768px) {
     grid-template-columns: 1fr 1fr;
   }
 }
 
-.form-actions {
+// Form Group & Label
+.form-group {
   display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid #E0E0E0;
+  flex-direction: column;
 }
 
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1E293B;
+  margin-bottom: 8px;
+
+  .required {
+    color: #EF4444;
+  }
+}
+
+// Custom Material Field Overrides
+::ng-deep {
+  .custom-field {
+    .mdc-text-field--outlined {
+      height: 48px;
+    }
+
+    // Hide internal label space since we use external labels
+    .mat-mdc-form-field-infix {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      min-height: 48px;
+    }
+
+    // Fix icon alignment
+    .mat-mdc-form-field-icon-prefix {
+      padding: 0 12px 0 16px;
+    }
+
+    .field-icon {
+      color: #94A3B8;
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .salary-prefix {
+      color: #94A3B8;
+      font-weight: 500;
+      padding: 0 8px 0 16px;
+      font-size: 0.875rem;
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+      padding-top: 4px;
+    }
+  }
+
+  .no-prefix {
+    .mat-mdc-form-field-infix {
+      padding-left: 16px;
+    }
+  }
+}
+
+// Helper Text
+.helper-text {
+  font-size: 0.75rem;
+  color: #94A3B8;
+  margin-top: -14px; // Pull up closer to the field, ignoring subscript space if no error
+}
+
+// Dropdown Search
 .select-search {
   display: flex;
   align-items: center;
@@ -48,5 +195,59 @@
     width: 100%;
     font-size: 0.875rem;
     padding: 8px 0;
+  }
+}
+
+// Form Actions
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid #F1F5F9;
+
+  button {
+    height: 42px !important;
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      margin-right: 6px;
+    }
+  }
+
+  .btn-cancel {
+    color: #475569 !important;
+    border-color: #CBD5E1 !important;
+  }
+}
+
+// Info Banner
+.info-banner {
+  display: flex;
+  align-items: center;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-top: 24px;
+  gap: 12px;
+
+  .info-icon {
+    color: #3B82F6;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  span {
+    font-size: 0.875rem;
+    color: #1E40AF;
+    font-weight: 500;
+  }
+
+  .required {
+    color: #EF4444;
   }
 }

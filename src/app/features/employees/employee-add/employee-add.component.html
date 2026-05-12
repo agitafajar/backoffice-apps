@@ -1,111 +1,175 @@
-<div class="page-container">
+<div class="page-container add-employee-page">
+  <div class="breadcrumbs">
+    <a routerLink="/employees" class="breadcrumb-link">Employees</a>
+    <mat-icon class="breadcrumb-separator">chevron_right</mat-icon>
+    <span class="breadcrumb-current">Add Employee</span>
+  </div>
+
   <app-page-header
     title="Add Employee"
     subtitle="Enter details to onboard a new team member."
   />
 
-  <div class="section-card" style="max-width: 800px; width: 100%;">
+  <div class="form-card">
     <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="add-form">
 
-      <h3 class="section-title">Personal Information</h3>
-      <div class="form-grid">
-        <mat-form-field appearance="outline">
-          <mat-label>Username</mat-label>
-          <input matInput formControlName="username" placeholder="jdoe123" />
-          <mat-error *ngIf="employeeForm.get('username')?.hasError('required')">Username is required</mat-error>
-        </mat-form-field>
+      <!-- Personal Information Section -->
+      <div class="form-section">
+        <div class="section-header">
+          <div class="section-icon blue-bg">
+            <mat-icon>person</mat-icon>
+          </div>
+          <h3 class="section-title">Personal Information</h3>
+        </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Email Address</mat-label>
-          <input matInput formControlName="email" type="email" placeholder="john.doe@example.com" />
-          <mat-error *ngIf="employeeForm.get('email')?.hasError('required')">Email is required</mat-error>
-          <mat-error *ngIf="employeeForm.get('email')?.hasError('email')">Invalid email format</mat-error>
-        </mat-form-field>
+        <div class="form-grid">
+          <!-- Username -->
+          <div class="form-group">
+            <label class="form-label">Username <span class="required">*</span></label>
+            <mat-form-field appearance="outline" class="custom-field">
+              <mat-icon matPrefix class="field-icon">person_outline</mat-icon>
+              <input matInput formControlName="username" placeholder="Enter username" />
+              <mat-error *ngIf="employeeForm.get('username')?.hasError('required')">Username is required</mat-error>
+            </mat-form-field>
+          </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>First Name</mat-label>
-          <input matInput formControlName="firstName" placeholder="John" />
-          <mat-error *ngIf="employeeForm.get('firstName')?.hasError('required')">First name is required</mat-error>
-        </mat-form-field>
+          <!-- Email Address -->
+          <div class="form-group">
+            <label class="form-label">Email Address <span class="required">*</span></label>
+            <mat-form-field appearance="outline" class="custom-field">
+              <mat-icon matPrefix class="field-icon">mail_outline</mat-icon>
+              <input matInput formControlName="email" type="email" placeholder="Enter email address" />
+              <mat-error *ngIf="employeeForm.get('email')?.hasError('required')">Email is required</mat-error>
+              <mat-error *ngIf="employeeForm.get('email')?.hasError('email')">Invalid email format</mat-error>
+            </mat-form-field>
+          </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Last Name</mat-label>
-          <input matInput formControlName="lastName" placeholder="Doe" />
-          <mat-error *ngIf="employeeForm.get('lastName')?.hasError('required')">Last name is required</mat-error>
-        </mat-form-field>
+          <!-- First Name -->
+          <div class="form-group">
+            <label class="form-label">First Name <span class="required">*</span></label>
+            <mat-form-field appearance="outline" class="custom-field">
+              <mat-icon matPrefix class="field-icon">person_outline</mat-icon>
+              <input matInput formControlName="firstName" placeholder="Enter first name" />
+              <mat-error *ngIf="employeeForm.get('firstName')?.hasError('required')">First name is required</mat-error>
+            </mat-form-field>
+          </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Birth Date</mat-label>
-          <input matInput [matDatepicker]="birthPicker" [max]="today" formControlName="birthDate" placeholder="Choose a date">
-          <mat-datepicker-toggle matIconSuffix [for]="birthPicker"></mat-datepicker-toggle>
-          <mat-datepicker #birthPicker></mat-datepicker>
-          <mat-error *ngIf="employeeForm.get('birthDate')?.hasError('required')">Birth date is required</mat-error>
-        </mat-form-field>
+          <!-- Last Name -->
+          <div class="form-group">
+            <label class="form-label">Last Name <span class="required">*</span></label>
+            <mat-form-field appearance="outline" class="custom-field">
+              <mat-icon matPrefix class="field-icon">person_outline</mat-icon>
+              <input matInput formControlName="lastName" placeholder="Enter last name" />
+              <mat-error *ngIf="employeeForm.get('lastName')?.hasError('required')">Last name is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Birth Date -->
+          <div class="form-group">
+            <label class="form-label">Birth Date <span class="required">*</span></label>
+            <mat-form-field appearance="outline" class="custom-field">
+              <mat-icon matPrefix class="field-icon">calendar_today</mat-icon>
+              <input matInput [matDatepicker]="birthPicker" [max]="today" formControlName="birthDate" placeholder="Select birth date">
+              <mat-datepicker-toggle matIconSuffix [for]="birthPicker"></mat-datepicker-toggle>
+              <mat-datepicker #birthPicker></mat-datepicker>
+              <mat-error *ngIf="employeeForm.get('birthDate')?.hasError('required')">Birth date is required</mat-error>
+            </mat-form-field>
+            <span class="helper-text">Date cannot be in the future</span>
+          </div>
+        </div>
       </div>
 
-      <mat-divider class="my-6"></mat-divider>
+      <mat-divider class="section-divider"></mat-divider>
 
-      <h3 class="section-title">Employment Details</h3>
-      <div class="form-grid">
+      <!-- Employment Details Section -->
+      <div class="form-section">
+        <div class="section-header">
+          <div class="section-icon purple-bg">
+            <mat-icon>business_center</mat-icon>
+          </div>
+          <h3 class="section-title">Employment Details</h3>
+        </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Group</mat-label>
-          <mat-select formControlName="group">
-            <mat-select-trigger>
-              {{ employeeForm.get('group')?.value || 'Select a group' }}
-            </mat-select-trigger>
+        <div class="form-grid">
+          <!-- Group -->
+          <div class="form-group">
+            <label class="form-label">Group <span class="required">*</span></label>
+            <mat-form-field appearance="outline" class="custom-field">
+              <mat-icon matPrefix class="field-icon">search</mat-icon>
+              <mat-select formControlName="group" placeholder="Search and select group">
+                <mat-select-trigger>
+                  {{ employeeForm.get('group')?.value || 'Search and select group' }}
+                </mat-select-trigger>
+                <div class="select-search">
+                  <mat-icon>search</mat-icon>
+                  <input 
+                    matInput 
+                    placeholder="Search group..." 
+                    (keyup)="onGroupSearch($event)" 
+                    (keydown)="$event.stopPropagation()" 
+                  />
+                </div>
+                <mat-option *ngFor="let group of filteredGroups" [value]="group">{{ group }}</mat-option>
+                <mat-option *ngIf="filteredGroups.length === 0" disabled>No groups found</mat-option>
+              </mat-select>
+              <mat-error *ngIf="employeeForm.get('group')?.hasError('required')">Group is required</mat-error>
+            </mat-form-field>
+            <span class="helper-text">Type to search group</span>
+          </div>
 
-            <div class="select-search">
-              <mat-icon>search</mat-icon>
-              <input 
-                matInput 
-                placeholder="Search group..." 
-                (keyup)="onGroupSearch($event)" 
-                (keydown)="$event.stopPropagation()" 
-              />
-            </div>
-            <mat-option *ngFor="let group of filteredGroups" [value]="group">
-              {{ group }}
-            </mat-option>
-            <mat-option *ngIf="filteredGroups.length === 0" disabled>
-              No groups found
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="employeeForm.get('group')?.hasError('required')">Group is required</mat-error>
-        </mat-form-field>
+          <!-- Status -->
+          <div class="form-group">
+            <label class="form-label">Status <span class="required">*</span></label>
+            <mat-form-field appearance="outline" class="custom-field no-prefix">
+              <mat-select formControlName="status" placeholder="Select status">
+                <mat-option value="Active">Active</mat-option>
+                <mat-option value="Inactive">Inactive</mat-option>
+                <mat-option value="On Leave">On Leave</mat-option>
+                <mat-option value="Onboarding">Onboarding</mat-option>
+              </mat-select>
+              <mat-error *ngIf="employeeForm.get('status')?.hasError('required')">Status is required</mat-error>
+            </mat-form-field>
+          </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Status</mat-label>
-          <mat-select formControlName="status">
-            <mat-option value="Active">Active</mat-option>
-            <mat-option value="Inactive">Inactive</mat-option>
-            <mat-option value="On Leave">On Leave</mat-option>
-            <mat-option value="Onboarding">Onboarding</mat-option>
-          </mat-select>
-          <mat-error *ngIf="employeeForm.get('status')?.hasError('required')">Status is required</mat-error>
-        </mat-form-field>
+          <!-- Basic Salary -->
+          <div class="form-group">
+            <label class="form-label">Basic Salary <span class="required">*</span></label>
+            <mat-form-field appearance="outline" class="custom-field">
+              <span matTextPrefix class="salary-prefix">Rp.</span>
+              <input matInput formControlName="basicSalary" type="number" placeholder="Enter basic salary" />
+              <mat-error *ngIf="employeeForm.get('basicSalary')?.hasError('required')">Basic salary is required</mat-error>
+              <mat-error *ngIf="employeeForm.get('basicSalary')?.hasError('pattern')">Must be a valid number</mat-error>
+            </mat-form-field>
+            <span class="helper-text">Numbers only</span>
+          </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Basic Salary</mat-label>
-          <span matTextPrefix>Rp. &nbsp;</span>
-          <input matInput formControlName="basicSalary" type="number" placeholder="5000000" />
-          <mat-error *ngIf="employeeForm.get('basicSalary')?.hasError('required')">Basic salary is required</mat-error>
-          <mat-error *ngIf="employeeForm.get('basicSalary')?.hasError('pattern')">Must be a valid number</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Description (Date)</mat-label>
-          <input matInput [matDatepicker]="descPicker" formControlName="description" placeholder="Choose a date">
-          <mat-datepicker-toggle matIconSuffix [for]="descPicker"></mat-datepicker-toggle>
-          <mat-datepicker #descPicker></mat-datepicker>
-          <mat-error *ngIf="employeeForm.get('description')?.hasError('required')">Description date is required</mat-error>
-        </mat-form-field>
+          <!-- Description (Date) -->
+          <div class="form-group">
+            <label class="form-label">Description (Date) <span class="required">*</span></label>
+            <mat-form-field appearance="outline" class="custom-field no-prefix">
+              <input matInput [matDatepicker]="descPicker" formControlName="description" placeholder="Select date">
+              <mat-datepicker-toggle matIconSuffix [for]="descPicker"></mat-datepicker-toggle>
+              <mat-datepicker #descPicker></mat-datepicker>
+              <mat-error *ngIf="employeeForm.get('description')?.hasError('required')">Description date is required</mat-error>
+            </mat-form-field>
+            <span class="helper-text">Select a relevant date</span>
+          </div>
+        </div>
       </div>
 
       <div class="form-actions">
-        <button mat-button type="button" routerLink="/employees">Cancel</button>
-        <button mat-flat-button color="primary" type="submit">Save Employee</button>
+        <button mat-stroked-button type="button" routerLink="/employees" class="btn-cancel">
+          <mat-icon>close</mat-icon> Cancel
+        </button>
+        <button mat-flat-button color="primary" type="submit" class="btn-save">
+          <mat-icon>save</mat-icon> Save Employee
+        </button>
       </div>
     </form>
+  </div>
+
+  <div class="info-banner">
+    <mat-icon class="info-icon">info</mat-icon>
+    <span>All fields marked with <span class="required">*</span> are required.</span>
   </div>
 </div>
