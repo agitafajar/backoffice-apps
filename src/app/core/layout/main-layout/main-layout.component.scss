@@ -1,5 +1,6 @@
 :host {
       display: flex;
+      width: 100%;
       min-height: 100vh;
     }
 
@@ -18,11 +19,11 @@
 
     .main-content {
       flex: 1;
-      margin-left: 240px;
+      min-width: 0;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      background: #F5F5F5;
+      background: #F8FAFC;
     }
 
     .main-content__body {
