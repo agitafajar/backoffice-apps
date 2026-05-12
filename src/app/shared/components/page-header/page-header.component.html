@@ -1,11 +1,14 @@
 <div class="page-header">
-      <div class="page-header__text">
-        <h2 class="page-header__title">{{ title }}</h2>
-        @if (subtitle) {
-          <p class="page-header__subtitle">{{ subtitle }}</p>
-        }
-      </div>
-      <div class="page-header__actions">
-        <ng-content></ng-content>
-      </div>
+  <div class="page-header__left">
+    <h2 class="page-header__title">{{ title }}</h2>
+    @if (subtitle) {
+      <p class="page-header__subtitle">{{ subtitle }}</p>
+    }
+    <div class="page-header__actions">
+      <ng-content select="[actions]"></ng-content>
     </div>
+  </div>
+  <div class="page-header__right">
+    <ng-content select="[headerRight]"></ng-content>
+  </div>
+</div>

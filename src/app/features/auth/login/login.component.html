@@ -1,87 +1,90 @@
 <div class="login-card">
-      <!-- Logo -->
-      <div class="login-card__header">
-        <div class="login-card__logo">
-          <mat-icon class="login-card__logo-icon">business_center</mat-icon>
-        </div>
-        <h1 class="login-card__title">HR Nexus</h1>
-        <p class="login-card__subtitle">Sign in to your enterprise account</p>
-      </div>
 
-      <!-- Form -->
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-card__form">
-        <!-- Username -->
-        <div class="form-group">
-          <label class="form-label">Username</label>
-          <mat-form-field appearance="outline">
-            <mat-icon matPrefix>person_outline</mat-icon>
-            <input
-              matInput
-              formControlName="username"
-              placeholder="e.g. jdoe123"
-              id="login-username"
-            />
-            @if (loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched) {
-              <mat-error>Username is required</mat-error>
-            }
-          </mat-form-field>
-        </div>
-
-        <!-- Password -->
-        <div class="form-group">
-          <div class="form-label-row">
-            <label class="form-label">Password</label>
-            <a href="javascript:void(0)" class="form-link">Forgot password?</a>
-          </div>
-          <mat-form-field appearance="outline">
-            <mat-icon matPrefix>lock_outline</mat-icon>
-            <input
-              matInput
-              [type]="hidePassword ? 'password' : 'text'"
-              formControlName="password"
-              placeholder="••••••••"
-              id="login-password"
-            />
-            <button
-              mat-icon-button
-              matSuffix
-              type="button"
-              (click)="hidePassword = !hidePassword"
-            >
-              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-            @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
-              <mat-error>Password is required</mat-error>
-            }
-          </mat-form-field>
-        </div>
-
-        <!-- Keep signed in -->
-        <mat-checkbox formControlName="rememberMe" class="login-card__checkbox">
-          Keep me signed in
-        </mat-checkbox>
-
-        <!-- Submit -->
-        <button
-          mat-flat-button
-          color="primary"
-          class="login-card__submit"
-          type="submit"
-          id="login-submit"
-        >
-          Sign In
-          <mat-icon>arrow_forward</mat-icon>
-        </button>
-      </form>
-
-      <!-- Footer -->
-      <div class="login-card__footer">
-        <mat-icon class="login-card__footer-icon">help_outline</mat-icon>
-        <span>Need help? <a href="javascript:void(0)" class="form-link">Contact IT Support</a></span>
-      </div>
-
-      <div class="login-card__env">
-        <span class="login-card__env-dot"></span>
-        Production Environment
-      </div>
+  <div class="login-card__header">
+    <div class="login-card__logo">
+      <mat-icon class="login-card__logo-icon">business_center</mat-icon>
     </div>
+    <h1 class="login-card__title">Welcome Back!</h1>
+    <p class="login-card__subtitle">Sign in to your HR Nexus account</p>
+  </div>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-card__form">
+
+    <div class="form-group">
+      <label class="form-label">Username</label>
+      <mat-form-field appearance="outline">
+        <mat-icon matPrefix>person_outline</mat-icon>
+        <input
+          matInput
+          formControlName="username"
+          placeholder="Enter your username"
+          id="login-username"
+        />
+        @if (loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched) {
+          <mat-error>Username is required</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <mat-form-field appearance="outline">
+        <mat-icon matPrefix>lock_outline</mat-icon>
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          formControlName="password"
+          placeholder="Enter your password"
+          id="login-password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hidePassword = !hidePassword"
+        >
+          <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button>
+        @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
+          <mat-error>Password is required</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="login-card__options">
+      <mat-checkbox formControlName="rememberMe" class="login-card__checkbox">
+        Remember me
+      </mat-checkbox>
+      <a href="javascript:void(0)" class="login-card__forgot">Forgot password?</a>
+    </div>
+
+    <button
+      mat-flat-button
+      color="primary"
+      class="login-card__submit"
+      type="submit"
+      id="login-submit"
+    >
+      Sign In
+    </button>
+  </form>
+
+  <div class="login-card__divider">
+    <span>or continue with</span>
+  </div>
+
+  <button class="login-card__google" type="button">
+    <svg class="google-icon" viewBox="0 0 24 24" width="20" height="20">
+      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+    </svg>
+    Sign in with Google
+  </button>
+
+  <div class="login-card__footer">
+    <span>&copy; 2024 HR Nexus Enterprise Suite.</span>
+    <span>All rights reserved.</span>
+  </div>
+</div>

@@ -1,10 +1,12 @@
-<app-page-header title="Add Employee" subtitle="Enter details to onboard a new team member." />
+<div class="page-container">
+  <app-page-header
+    title="Add Employee"
+    subtitle="Enter details to onboard a new team member."
+  />
 
-<div class="page-container" style="max-width: 800px; padding-top: 0;">
-  <div class="section-card">
+  <div class="section-card" style="max-width: 800px; width: 100%;">
     <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="add-form">
-      
-      <!-- Core Info -->
+
       <h3 class="section-title">Personal Information</h3>
       <div class="form-grid">
         <mat-form-field appearance="outline">
@@ -43,18 +45,16 @@
 
       <mat-divider class="my-6"></mat-divider>
 
-      <!-- Job Info -->
       <h3 class="section-title">Employment Details</h3>
       <div class="form-grid">
-        
-        <!-- Group with search -->
+
         <mat-form-field appearance="outline">
           <mat-label>Group</mat-label>
           <mat-select formControlName="group">
             <mat-select-trigger>
               {{ employeeForm.get('group')?.value || 'Select a group' }}
             </mat-select-trigger>
-            <!-- Search Input inside MatSelect -->
+
             <div class="select-search">
               <mat-icon>search</mat-icon>
               <input 
@@ -102,7 +102,6 @@
         </mat-form-field>
       </div>
 
-      <!-- Actions -->
       <div class="form-actions">
         <button mat-button type="button" routerLink="/employees">Cancel</button>
         <button mat-flat-button color="primary" type="submit">Save Employee</button>

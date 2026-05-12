@@ -1,0 +1,16 @@
+<div class="filter-select-wrapper" [style.min-width]="minWidth">
+  @if (icon) {
+    <mat-icon class="prefix-icon">{{ icon }}</mat-icon>
+  }
+  <select
+    class="filter-select"
+    [class.has-icon]="!!icon"
+    [value]="value"
+    (change)="onChange($event)"
+  >
+    @for (opt of options; track opt.value) {
+      <option [value]="opt.value">{{ opt.label }}</option>
+    }
+  </select>
+  <mat-icon class="suffix-icon">expand_more</mat-icon>
+</div>

@@ -84,16 +84,17 @@
       cursor: pointer;
 
       &:hover {
-        background: #F1F5F9;
+        background: #F8FAFC;
         color: #1E293B;
       }
 
       &--active {
-        background: #E3F2FD !important;
-        color: #1565C0 !important;
+        background: #EFF6FF !important;
+        color: #1D4ED8 !important;
+        font-weight: 600;
 
         .sidebar__nav-icon {
-          color: #1565C0;
+          color: #1D4ED8;
         }
       }
     }

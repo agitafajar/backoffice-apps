@@ -1,7 +1,7 @@
 export type EmployeeStatus = 'Active' | 'Inactive' | 'On Leave' | 'Onboarding';
 
 export interface Employee {
-  id: string; // Internal ID for routing
+  id: string; 
   username: string;
   firstName: string;
   lastName: string;
@@ -10,7 +10,7 @@ export interface Employee {
   basicSalary: number;
   status: EmployeeStatus | string;
   group: string;
-  description: Date; // The assessment explicitly requested datetime for description
+  description: Date; 
 }
 
 export interface NavItem {

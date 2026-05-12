@@ -1,6 +1,218 @@
-<app-page-header title="Payroll" subtitle="Manage compensation, payslips, and tax information." />
-    <div class="placeholder-card">
-      <mat-icon>payments</mat-icon>
-      <h3>Payroll Management</h3>
-      <p>Payroll features coming soon.</p>
+<div class="page-container">
+
+  <app-page-header
+    title="Payroll"
+    subtitle="Manage compensation, payslips, and tax information."
+  >
+    <div actions>
+      <button mat-flat-button color="primary" class="btn-primary">
+        <mat-icon>play_arrow</mat-icon>
+        Run Payroll
+      </button>
+      <button mat-stroked-button class="btn-export">
+        <mat-icon>download</mat-icon>
+        Export
+      </button>
     </div>
+  </app-page-header>
+
+  <div class="stats-grid">
+    @for (stat of stats; track stat.label) {
+      <app-stat-card
+        [icon]="stat.icon"
+        [label]="stat.label"
+        [value]="stat.value"
+        [trend]="stat.trend"
+        [trendUp]="stat.trendUp"
+        [iconBg]="stat.iconBg"
+        [iconColor]="stat.iconColor"
+      />
+    }
+  </div>
+
+  <div class="filters-row">
+    <div class="filter-group">
+      <app-filter-select
+        icon="calendar_today"
+        [options]="periodOptions"
+        value="may-2024"
+      />
+      <app-filter-select [options]="deptOptions" value="" />
+      <app-filter-select [options]="typeOptions" value="" />
+    </div>
+
+    <div class="filter-actions">
+      <button mat-stroked-button class="btn-outline">
+        <mat-icon>filter_list</mat-icon>
+        Filter
+      </button>
+      <button mat-stroked-button class="btn-outline">
+        <mat-icon>refresh</mat-icon>
+        Clear
+      </button>
+    </div>
+  </div>
+
+  <div class="middle-cards">
+
+    <div class="card card-summary">
+      <div class="card-header">
+        <h3 class="card-title">Payroll Summary</h3>
+      </div>
+      <div class="card-body donut-layout">
+        <div class="donut-container">
+          <svg viewBox="0 0 160 160" class="donut-svg">
+            @for (arc of donutArcs(); track $index) {
+              <path [attr.d]="arc.path" fill="none" [attr.stroke]="arc.color" stroke-width="24" stroke-linecap="butt" />
+            }
+          </svg>
+          <div class="donut-center">
+            <span class="donut-amount">Rp. 1.245B</span>
+            <span class="donut-label">Total Payroll</span>
+          </div>
+        </div>
+
+        <div class="donut-legend">
+          <div class="legend-item">
+            <span class="legend-dot" style="background: #3B82F6"></span>
+            <span class="legend-name">Basic Salary</span>
+            <span class="legend-val">Rp. 912.450.000 (73.3%)</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background: #22C55E"></span>
+            <span class="legend-name">Allowances</span>
+            <span class="legend-val">Rp. 198.750.000 (16.0%)</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background: #EC4899"></span>
+            <span class="legend-name">Overtime</span>
+            <span class="legend-val">Rp. 78.600.000 (6.3%)</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background: #14B8A6"></span>
+            <span class="legend-name">Bonuses</span>
+            <span class="legend-val">Rp. 55.200.000 (4.4%)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-bottom">
+        <div class="summary-stat">
+          <span class="stat-label">Gross Payroll</span>
+          <span class="stat-val text-dark">Rp. 1.245.750.000</span>
+        </div>
+        <div class="summary-stat">
+          <span class="stat-label">Total Deductions</span>
+          <span class="stat-val text-red">Rp. 156.230.000</span>
+        </div>
+        <div class="summary-stat">
+          <span class="stat-label">Net Payroll</span>
+          <span class="stat-val text-green">Rp. 1.089.520.000</span>
+        </div>
+        <div class="summary-stat">
+          <span class="stat-label">Tax Withheld</span>
+          <span class="stat-val text-dark">Rp. 98.450.000</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-components">
+      <div class="card-header">
+        <h3 class="card-title">Payroll Components</h3>
+      </div>
+      <div class="components-list">
+
+        <div class="comp-item">
+          <div class="comp-icon" style="background: #EFF6FF; color: #3B82F6;">
+            <mat-icon>account_balance_wallet</mat-icon>
+          </div>
+          <div class="comp-text">
+            <div class="comp-name">Basic Salary</div>
+            <div class="comp-desc">73.3% of total payroll</div>
+          </div>
+          <div class="comp-amount">Rp. 912.450.000</div>
+        </div>
+
+        <div class="comp-item">
+          <div class="comp-icon" style="background: #F0FDF4; color: #22C55E;">
+            <mat-icon>groups</mat-icon>
+          </div>
+          <div class="comp-text">
+            <div class="comp-name">Allowances</div>
+            <div class="comp-desc">16.0% of total payroll</div>
+          </div>
+          <div class="comp-amount">Rp. 198.750.000</div>
+        </div>
+
+        <div class="comp-item">
+          <div class="comp-icon" style="background: #FFF7ED; color: #F97316;">
+            <mat-icon>more_time</mat-icon>
+          </div>
+          <div class="comp-text">
+            <div class="comp-name">Overtime</div>
+            <div class="comp-desc">6.3% of total payroll</div>
+          </div>
+          <div class="comp-amount">Rp. 78.600.000</div>
+        </div>
+
+        <div class="comp-item">
+          <div class="comp-icon" style="background: #FDF2F8; color: #EC4899;">
+            <mat-icon>redeem</mat-icon>
+          </div>
+          <div class="comp-text">
+            <div class="comp-name">Bonuses</div>
+            <div class="comp-desc">4.4% of total payroll</div>
+          </div>
+          <div class="comp-amount">Rp. 55.200.000</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-table">
+    <div class="card-header space-between">
+      <h3 class="card-title">Recent Payroll Runs</h3>
+      <a href="javascript:void(0)" class="view-all">View All</a>
+    </div>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>PAYROLL PERIOD</th>
+            <th>PAY DATE</th>
+            <th>EMPLOYEES</th>
+            <th>GROSS PAYROLL</th>
+            <th>DEDUCTIONS</th>
+            <th>NET PAYROLL</th>
+            <th>STATUS</th>
+            <th class="actions-col">ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (run of recentRuns; track run.period) {
+            <tr>
+              <td class="fw-medium text-dark">{{ run.period }}</td>
+              <td>{{ run.payDate }}</td>
+              <td>{{ run.employees }}</td>
+              <td>{{ run.gross }}</td>
+              <td>{{ run.deductions }}</td>
+              <td>{{ run.net }}</td>
+              <td>
+                <span class="status-badge completed">{{ run.status }}</span>
+              </td>
+              <td class="actions-col">
+                <button mat-icon-button class="action-btn-sm">
+                  <mat-icon>download</mat-icon>
+                </button>
+                <button mat-icon-button class="action-btn-sm">
+                  <mat-icon>more_horiz</mat-icon>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

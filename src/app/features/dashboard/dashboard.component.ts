@@ -1,23 +1,14 @@
-import { Component, inject, OnInit, signal, computed, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, inject, computed, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
 import { StatusBadgeComponent } from '../../shared/components/status-badge/status-badge.component';
 import { AvatarComponent } from '../../shared/components/avatar/avatar.component';
+import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
+import { StatCardComponent } from '../../shared/components/stat-card/stat-card.component';
 import { EmployeeService } from '../../core/services/employee.service';
-
-interface StatCard {
-  icon: string;
-  label: string;
-  value: string;
-  trend: string;
-  trendUp: boolean;
-  color: string; // bg color class
-  iconColor: string;
-}
 
 interface UpcomingEvent {
   month: string;
@@ -36,9 +27,10 @@ interface UpcomingEvent {
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
-    PageHeaderComponent,
     StatusBadgeComponent,
     AvatarComponent,
+    PageHeaderComponent,
+    StatCardComponent,
     DatePipe,
   ],
   templateUrl: './dashboard.component.html',
@@ -49,8 +41,7 @@ export class DashboardComponent implements AfterViewInit {
 
   @ViewChild('chartCanvas') chartCanvas!: ElementRef<HTMLCanvasElement>;
 
-  // Stats
-  readonly stats = computed<StatCard[]>(() => {
+  readonly stats = computed(() => {
     const employees = this.employeeService.employees();
     const active = employees.filter(e => e.status === 'Active').length;
     const onboarding = employees.filter(e => e.status === 'Onboarding').length;
@@ -64,7 +55,7 @@ export class DashboardComponent implements AfterViewInit {
         value: employees.length.toString(),
         trend: `↑ ${onboarding} this month`,
         trendUp: true,
-        color: '#EBF5FF',
+        iconBg: '#EBF5FF',
         iconColor: '#3B82F6'
       },
       {
@@ -73,7 +64,7 @@ export class DashboardComponent implements AfterViewInit {
         value: onboarding.toString(),
         trend: `↑ ${Math.floor(onboarding / 2)} this month`,
         trendUp: true,
-        color: '#F0FDF4',
+        iconBg: '#F0FDF4',
         iconColor: '#22C55E'
       },
       {
@@ -82,7 +73,7 @@ export class DashboardComponent implements AfterViewInit {
         value: onLeave.toString(),
         trend: `↓ ${Math.max(1, Math.floor(onLeave / 3))} this month`,
         trendUp: false,
-        color: '#FFF7ED',
+        iconBg: '#FFF7ED',
         iconColor: '#F97316'
       },
       {
@@ -91,13 +82,12 @@ export class DashboardComponent implements AfterViewInit {
         value: this.formatShortRupiah(totalSalary),
         trend: '↑ 8% from last month',
         trendUp: true,
-        color: '#F5F3FF',
+        iconBg: '#F5F3FF',
         iconColor: '#8B5CF6'
       }
     ];
   });
 
-  // Department distribution
   readonly departments = computed(() => {
     const employees = this.employeeService.employees();
     const groupMap = new Map<string, number>();
@@ -117,16 +107,13 @@ export class DashboardComponent implements AfterViewInit {
     }));
   });
 
-  // Recent employees (latest 5)
   readonly recentEmployees = computed(() => {
     return this.employeeService.employees().slice(0, 5);
   });
 
-  // Chart data (monthly mock)
   readonly monthlyData = [45, 52, 58, 62, 68, 75, 80, 88, 95, 102, 110, 118];
   readonly months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-  // Upcoming events
   readonly events: UpcomingEvent[] = [
     { month: 'AUG', day: '30', title: 'Monthly Payroll Processing', time: '09:00 AM - 12:00 PM', color: '#3B82F6' },
     { month: 'SEP', day: '05', title: 'Performance Review Meeting', time: '10:00 AM - 12:00 PM', color: '#22C55E' },
@@ -169,7 +156,6 @@ export class DashboardComponent implements AfterViewInit {
     const maxVal = Math.max(...this.monthlyData) + 20;
     const minVal = 0;
 
-    // Grid lines
     ctx.strokeStyle = '#F1F5F9';
     ctx.lineWidth = 1;
     const gridSteps = [0, 50, 100, 150];
@@ -180,14 +166,12 @@ export class DashboardComponent implements AfterViewInit {
       ctx.lineTo(w - padding.right, y);
       ctx.stroke();
 
-      // Y labels
       ctx.fillStyle = '#94A3B8';
       ctx.font = '11px Inter, sans-serif';
       ctx.textAlign = 'right';
       ctx.fillText(val.toString(), padding.left - 8, y + 4);
     });
 
-    // X labels
     ctx.fillStyle = '#94A3B8';
     ctx.font = '11px Inter, sans-serif';
     ctx.textAlign = 'center';
@@ -196,7 +180,6 @@ export class DashboardComponent implements AfterViewInit {
       ctx.fillText(m, x, h - 8);
     });
 
-    // Gradient fill
     const gradient = ctx.createLinearGradient(0, padding.top, 0, h - padding.bottom);
     gradient.addColorStop(0, 'rgba(59, 130, 246, 0.15)');
     gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
@@ -208,7 +191,7 @@ export class DashboardComponent implements AfterViewInit {
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     });
-    // Close for fill
+
     const lastX = padding.left + chartW;
     const firstX = padding.left;
     ctx.lineTo(lastX, padding.top + chartH);
@@ -217,7 +200,6 @@ export class DashboardComponent implements AfterViewInit {
     ctx.fillStyle = gradient;
     ctx.fill();
 
-    // Line
     ctx.beginPath();
     this.monthlyData.forEach((val, i) => {
       const x = padding.left + (i / (this.monthlyData.length - 1)) * chartW;
@@ -230,7 +212,6 @@ export class DashboardComponent implements AfterViewInit {
     ctx.lineJoin = 'round';
     ctx.stroke();
 
-    // Dots
     this.monthlyData.forEach((val, i) => {
       const x = padding.left + (i / (this.monthlyData.length - 1)) * chartW;
       const y = padding.top + chartH - ((val - minVal) / (maxVal - minVal)) * chartH;
@@ -244,7 +225,6 @@ export class DashboardComponent implements AfterViewInit {
     });
   }
 
-  // For donut chart in template — computed SVG arcs
   readonly donutArcs = computed(() => {
     const depts = this.departments();
     const total = depts.reduce((s, d) => s + d.count, 0);
@@ -256,15 +236,13 @@ export class DashboardComponent implements AfterViewInit {
       cumulative += dept.count;
       const endAngle = (cumulative / total) * 360 - 90;
 
-      // Subtract 3 degrees from endAngle to create a small gap
       let start = this.polarToCartesian(80, 80, 65, endAngle - 3);
       const end = this.polarToCartesian(80, 80, 65, startAngle);
-      
-      // If there is only 1 item or it takes up the whole circle, don't leave a gap
+
       if (depts.length === 1) {
         start = this.polarToCartesian(80, 80, 65, endAngle - 0.01);
       }
-      
+
       const largeArc = (endAngle - 3) - startAngle > 180 ? 1 : 0;
 
       arcs.push({

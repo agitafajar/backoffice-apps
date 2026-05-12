@@ -1,12 +1,6 @@
-// ============================================================
-// HR Nexus — Global Styles
-// Custom Material Theme + Tailwind + Design System
-// ============================================================
 
-// Angular Material must be @use'd FIRST (before any other rules)
 @use '@angular/material' as mat;
 
-// ── Custom Palette ──────────────────────────────────────────
 $hr-nexus-blue: (
   50: #E3F2FD,
   100: #BBDEFB,
@@ -73,7 +67,6 @@ $hr-nexus-accent: (
   )
 );
 
-// ── Theme Definition ────────────────────────────────────────
 $hr-nexus-primary: mat.define-palette($hr-nexus-blue, 600);
 $hr-nexus-accent-palette: mat.define-palette($hr-nexus-accent, A200, A100, A400);
 $hr-nexus-warn: mat.define-palette(mat.$red-palette);
@@ -107,14 +100,9 @@ $hr-nexus-theme: mat.define-light-theme((
 @include mat.core();
 @include mat.all-component-themes($hr-nexus-theme);
 
-// Tailwind directives AFTER @use and @include
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-// ============================================================
-// Base Styles
-// ============================================================
 
 html, body {
   height: 100%;
@@ -128,11 +116,6 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-// ============================================================
-// Material Overrides
-// ============================================================
-
-// Form fields
 .mat-mdc-form-field {
   width: 100%;
 
@@ -145,7 +128,6 @@ html, body {
   }
 }
 
-// Buttons
 .mat-mdc-button,
 .mat-mdc-raised-button,
 .mat-mdc-flat-button,
@@ -156,13 +138,11 @@ html, body {
   text-transform: none;
 }
 
-// Cards
 .mat-mdc-card {
   border-radius: 12px !important;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.06) !important;
 }
 
-// Table
 .mat-mdc-table {
   .mat-mdc-header-row {
     background-color: #FAFAFA;
@@ -190,19 +170,16 @@ html, body {
   }
 }
 
-// Paginator
 .mat-mdc-paginator {
   font-size: 0.8125rem;
   color: #64748B;
 }
 
-// Menu
 .mat-mdc-menu-panel {
   border-radius: 8px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
 }
 
-// Snackbar
 .mat-mdc-snack-bar-container {
   border-radius: 8px !important;
 
@@ -213,24 +190,100 @@ html, body {
   }
 }
 
-// Dialog
 .mat-mdc-dialog-container {
   border-radius: 12px !important;
 }
 
-// Chips
 .mat-mdc-chip {
   border-radius: 16px !important;
   font-size: 0.75rem;
 }
 
-// ============================================================
-// Utility Classes
-// ============================================================
-
 .page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   padding: 24px 32px;
-  max-width: 1280px;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  @media (max-width: 640px) {
+    padding: 16px;
+    gap: 16px;
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+
+  @media (max-width: 1024px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 640px) { grid-template-columns: 1fr; }
+}
+
+.filters-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-primary, .btn-add {
+  height: 42px !important;
+  mat-icon { font-size: 18px; width: 18px; height: 18px; margin-right: 6px; }
+}
+
+.btn-outline, .btn-export {
+  height: 42px !important;
+  color: #1E293B !important;
+  border-color: #E2E8F0 !important;
+  mat-icon { font-size: 18px; width: 18px; height: 18px; margin-right: 6px; }
+  &:hover { background: #F8FAFC; color: #1E293B !important; }
+}
+
+.card {
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #F1F5F9;
+
+  &.space-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1E293B;
+  margin: 0;
+}
+
+.card-body {
+  padding: 24px;
+  flex: 1;
+  position: relative;
 }
 
 .section-card {
@@ -240,7 +293,33 @@ html, body {
   padding: 24px;
 }
 
-// Scrollbar styling
+.table-container {
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  overflow-x: auto;
+
+  table { width: 100%; }
+
+  th.mat-header-cell {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 16px 24px !important;
+    border-bottom: 1px solid #E2E8F0;
+    background: white;
+  }
+
+  td.mat-cell {
+    padding: 16px 24px !important;
+    font-size: 0.875rem;
+    border-bottom: 1px solid #F1F5F9;
+    vertical-align: middle;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -259,7 +338,6 @@ html, body {
   background: #94A3B8;
 }
 
-// Custom Snackbars
 .snackbar-warning {
   --mdc-snackbar-container-color: #F59E0B;
   --mdc-snackbar-supporting-text-color: white;
@@ -271,3 +349,8 @@ html, body {
   --mdc-snackbar-supporting-text-color: white;
   --mat-snack-bar-button-color: white;
 }
+
+.text-green { color: #16A34A; }
+.text-gray { color: #64748B; }
+.trend-up { color: #22C55E; }
+.trend-down { color: #EF4444; }

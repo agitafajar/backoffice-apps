@@ -1,54 +1,48 @@
-<div class="dashboard">
-  <!-- Page Header -->
-  <div class="dashboard__header">
-    <h1 class="dashboard__title">Dashboard</h1>
-    <p class="dashboard__subtitle">Overview of your HR metrics and activities.</p>
-  </div>
+<div class="page-container">
 
-  <!-- Stats Cards -->
+  <app-page-header
+    title="Dashboard"
+    subtitle="Overview of your HR metrics and activities."
+  />
+
   <div class="stats-grid">
     @for (stat of stats(); track stat.label) {
-      <div class="stat-card">
-        <div class="stat-card__icon" [style.background]="stat.color">
-          <mat-icon [style.color]="stat.iconColor">{{ stat.icon }}</mat-icon>
-        </div>
-        <div class="stat-card__content">
-          <span class="stat-card__label">{{ stat.label }}</span>
-          <span class="stat-card__value">{{ stat.value }}</span>
-          <span class="stat-card__trend" [class.stat-card__trend--up]="stat.trendUp" [class.stat-card__trend--down]="!stat.trendUp">
-            {{ stat.trend }}
-          </span>
-        </div>
-      </div>
+      <app-stat-card
+        [icon]="stat.icon"
+        [label]="stat.label"
+        [value]="stat.value"
+        [trend]="stat.trend"
+        [trendUp]="stat.trendUp"
+        [iconBg]="stat.iconBg"
+        [iconColor]="stat.iconColor"
+      />
     }
   </div>
 
-  <!-- Charts Row -->
   <div class="charts-row">
-    <!-- Employee Growth Chart -->
-    <div class="chart-card chart-card--growth">
-      <div class="chart-card__header">
-        <h3 class="chart-card__title">Employee Growth</h3>
-        <button mat-stroked-button class="chart-card__filter">
+
+    <div class="card">
+      <div class="card-header space-between">
+        <h3 class="card-title">Employee Growth</h3>
+        <button mat-stroked-button class="chart-filter-btn">
           This Year
           <mat-icon>expand_more</mat-icon>
         </button>
       </div>
-      <div class="chart-card__body">
+      <div class="card-body">
         <canvas #chartCanvas class="growth-canvas"></canvas>
       </div>
     </div>
 
-    <!-- Departments Donut -->
-    <div class="chart-card chart-card--departments">
-      <div class="chart-card__header">
-        <h3 class="chart-card__title">Departments</h3>
-        <a routerLink="/employees" class="chart-card__link">View all</a>
+    <div class="card">
+      <div class="card-header space-between">
+        <h3 class="card-title">Departments</h3>
+        <a routerLink="/employees" class="chart-link">View all</a>
       </div>
-      <div class="chart-card__body donut-body">
+      <div class="card-body donut-body">
         <div class="donut-chart">
           <svg viewBox="0 0 160 160" class="donut-svg">
-            @for (arc of donutArcs(); track arc.color) {
+            @for (arc of donutArcs(); track $index) {
               <path [attr.d]="arc.path" fill="none" [attr.stroke]="arc.color" stroke-width="24" stroke-linecap="butt" />
             }
           </svg>
@@ -66,13 +60,12 @@
     </div>
   </div>
 
-  <!-- Bottom Row -->
   <div class="bottom-row">
-    <!-- Recent Employees -->
-    <div class="chart-card chart-card--recent">
-      <div class="chart-card__header">
-        <h3 class="chart-card__title">Recent Employees</h3>
-        <a routerLink="/employees" class="chart-card__link">View all</a>
+
+    <div class="card">
+      <div class="card-header space-between">
+        <h3 class="card-title">Recent Employees</h3>
+        <a routerLink="/employees" class="chart-link">View all</a>
       </div>
       <div class="recent-table">
         <table>
@@ -105,11 +98,10 @@
       </div>
     </div>
 
-    <!-- Upcoming Events -->
-    <div class="chart-card chart-card--events">
-      <div class="chart-card__header">
-        <h3 class="chart-card__title">Upcoming Events</h3>
-        <a href="javascript:void(0)" class="chart-card__link">View all</a>
+    <div class="card">
+      <div class="card-header space-between">
+        <h3 class="card-title">Upcoming Events</h3>
+        <a href="javascript:void(0)" class="chart-link">View all</a>
       </div>
       <div class="events-list">
         @for (event of events; track event.title) {

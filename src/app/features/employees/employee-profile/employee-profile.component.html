@@ -1,8 +1,8 @@
 @if (employee()) {
   <div class="profile">
-    <!-- Back link + actions -->
+
     <div class="profile__toolbar">
-      <!-- Changed from 'Back to Employees' to 'OK' button based on requirements -->
+
       <button mat-flat-button color="primary" (click)="goBack()" class="profile__ok-btn">
         <mat-icon>check</mat-icon>
         OK
@@ -29,7 +29,6 @@
       </div>
     </div>
 
-    <!-- Profile header -->
     <div class="profile__header">
       <app-avatar
         [name]="employee()!.firstName + ' ' + employee()!.lastName"
@@ -58,11 +57,10 @@
       </div>
     </div>
 
-    <!-- Content grid -->
     <div class="profile__grid">
-      <!-- Left column -->
+
       <div class="profile__main">
-        <!-- Details -->
+
         <section class="card">
           <h3 class="card__title">Employee Details</h3>
           <div class="contact-list">
@@ -82,9 +80,8 @@
         </section>
       </div>
 
-      <!-- Right column -->
       <div class="profile__aside">
-        <!-- Compensation -->
+
         <section class="card">
           <h3 class="card__title">Compensation</h3>
           <div>

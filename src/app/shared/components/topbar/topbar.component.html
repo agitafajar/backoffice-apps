@@ -21,7 +21,6 @@
       />
     </div>
 
-    <!-- Notifications with badge -->
     <div class="topbar__notification-wrapper">
       <button mat-icon-button class="topbar__action topbar__notification-btn">
         <mat-icon>notifications_none</mat-icon>
@@ -29,19 +28,17 @@
       <span class="topbar__badge">2</span>
     </div>
 
-    <!-- Help / Question mark -->
     <button mat-icon-button class="topbar__action">
       <mat-icon>help_outline</mat-icon>
     </button>
 
-    <!-- User Profile Dropdown -->
     <div class="topbar__user" [matMenuTriggerFor]="userMenu">
       <div class="topbar__avatar-circle">
         AD
       </div>
       <span class="topbar__user-name">Admin</span>
       <mat-icon class="topbar__user-arrow">expand_more</mat-icon>
-      
+
       <mat-menu #userMenu="matMenu">
         <button mat-menu-item>
           <mat-icon>account_circle</mat-icon>

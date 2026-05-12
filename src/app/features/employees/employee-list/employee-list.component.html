@@ -1,11 +1,10 @@
 <div class="page-container">
-  <!-- Header -->
-  <div class="list-header">
-    <div class="list-header__text">
-      <h2 class="list-header__title">Employee Directory</h2>
-      <p class="list-header__subtitle">Manage your workforce, view details, and handle records.</p>
-    </div>
-    <div class="list-header__actions">
+
+  <app-page-header
+    title="Employee Directory"
+    subtitle="Manage your workforce, view details, and handle records."
+  >
+    <div actions>
       <button mat-stroked-button class="btn-export">
         <mat-icon>download</mat-icon>
         Export
@@ -15,106 +14,111 @@
         Add Employee
       </button>
     </div>
-  </div>
-
-  <!-- Filters & Search -->
-  <div class="filter-bar">
-    <div class="filter-bar__search-group">
-      <div class="search-input">
-        <mat-icon>search</mat-icon>
-        <input 
-          type="text" 
-          placeholder="Search username..." 
-          [value]="employeeService.currentSearchUsername()"
-          (keyup)="onSearchUser($event)"
-        />
-      </div>
-      <div class="search-input">
-        <mat-icon>group</mat-icon>
-        <input 
-          type="text" 
-          placeholder="Search group..." 
-          [value]="employeeService.currentSearchGroup()"
-          (keyup)="onSearchGroup($event)"
-        />
+    <div headerRight>
+      <div class="total-card">
+        <div class="total-card__icon">
+          <mat-icon>groups</mat-icon>
+        </div>
+        <div class="total-card__info">
+          <span class="total-card__label">Total Employees</span>
+          <span class="total-card__value">{{ employeeService.employees().length }}</span>
+          <span class="total-card__sub">Active across all departments</span>
+        </div>
       </div>
     </div>
-    
-    <div class="filter-bar__dropdowns">
-      <mat-form-field appearance="outline" class="density-compact">
-        <mat-select 
-          placeholder="All Statuses" 
-          [value]="employeeService.currentStatusFilter()"
-          (selectionChange)="onStatusFilter($event.value)"
-        >
-          <mat-option value="">All Statuses</mat-option>
-          <mat-option value="Active">Active</mat-option>
-          <mat-option value="Inactive">Inactive</mat-option>
-          <mat-option value="On Leave">On Leave</mat-option>
-          <mat-option value="Onboarding">Onboarding</mat-option>
-        </mat-select>
-      </mat-form-field>
+  </app-page-header>
+
+  <div class="filters-row">
+    <div class="filter-group">
+      <app-filter-input
+        icon="search"
+        placeholder="Search by username, name, or email..."
+        [value]="employeeService.currentSearchUsername()"
+        (valueChange)="onSearchUser($event)"
+        minWidth="280px"
+      />
+
+      <app-filter-input
+        icon="group"
+        placeholder="Search group..."
+        [value]="employeeService.currentSearchGroup()"
+        (valueChange)="onSearchGroup($event)"
+        [showSuffix]="true"
+        suffixIcon="expand_more"
+      />
+
+      <app-filter-select
+        [options]="statusOptions"
+        [value]="employeeService.currentStatusFilter()"
+        (valueChange)="onStatusFilter($event)"
+      />
     </div>
+
+    <button mat-stroked-button class="btn-outline" (click)="clearFilters()">
+      <mat-icon>refresh</mat-icon>
+      Clear Filters
+    </button>
   </div>
 
-  <!-- Data Table -->
-  <div class="table-container mat-elevation-z1">
+  <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
 
-      <!-- Username Column -->
       <ng-container matColumnDef="username">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
-        <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> USERNAME </th>
+        <td mat-cell *matCellDef="let element"> 
+          <span class="fw-medium text-dark">{{element.username}}</span>
+        </td>
       </ng-container>
 
-      <!-- Name Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> NAME </th>
         <td mat-cell *matCellDef="let element">
-          <div class="employee-cell">
-            <div class="employee-cell__info">
-              <span class="employee-cell__name">{{element.firstName}} {{element.lastName}}</span>
-              <span class="employee-cell__email">{{element.email}}</span>
-            </div>
+          <div class="employee-name-cell">
+            <app-avatar [name]="element.firstName + ' ' + element.lastName" [size]="32"></app-avatar>
+            <span class="fw-medium text-dark">{{element.firstName}} {{element.lastName}}</span>
           </div>
         </td>
       </ng-container>
 
-      <!-- Basic Salary Column -->
-      <ng-container matColumnDef="basicSalary">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Basic Salary </th>
-        <td mat-cell *matCellDef="let element"> 
-          {{ formatRupiah(element.basicSalary) }}
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> EMAIL </th>
+        <td mat-cell *matCellDef="let element">
+          <span class="text-gray">{{element.email}}</span>
         </td>
       </ng-container>
 
-      <!-- Status Column -->
+      <ng-container matColumnDef="basicSalary">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> BASIC SALARY </th>
+        <td mat-cell *matCellDef="let element"> 
+          <span class="fw-medium text-dark">{{ formatRupiah(element.basicSalary) }}</span>
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> STATUS </th>
         <td mat-cell *matCellDef="let element">
           <app-status-badge [status]="element.status"></app-status-badge>
         </td>
       </ng-container>
 
-      <!-- Group Column -->
       <ng-container matColumnDef="group">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Group </th>
-        <td mat-cell *matCellDef="let element"> {{element.group}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> GROUP </th>
+        <td mat-cell *matCellDef="let element"> 
+          <span class="fw-medium text-dark">{{element.group}}</span>
+        </td>
       </ng-container>
 
-      <!-- Actions Column -->
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef class="actions-header"> Action </th>
+        <th mat-header-cell *matHeaderCellDef class="actions-header"> ACTIONS </th>
         <td mat-cell *matCellDef="let element">
           <div class="actions-cell">
-            <!-- Navigate to Detail Page on view, edit and delete handled by component -->
-            <button mat-icon-button color="primary" [routerLink]="['/employees', element.id]" matTooltip="View Details">
+            <button mat-icon-button class="action-btn-view" [routerLink]="['/employees', element.id]">
               <mat-icon>visibility</mat-icon>
             </button>
-            <button mat-icon-button class="text-warning" (click)="editEmployee(element)" matTooltip="Edit">
+            <button mat-icon-button class="action-btn-edit" (click)="editEmployee(element)">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="deleteEmployee(element)" matTooltip="Delete">
+            <button mat-icon-button class="action-btn-delete" (click)="deleteEmployee(element)">
               <mat-icon>delete</mat-icon>
             </button>
           </div>
@@ -124,18 +128,19 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="employee-row"></tr>
 
-      <!-- No Data Row -->
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell text-center py-8 text-gray-500" colspan="6">
+        <td class="mat-cell text-center py-8 text-gray-500" colspan="7">
           No employees found matching the current filters.
         </td>
       </tr>
     </table>
 
-    <mat-paginator 
-      [pageSizeOptions]="[10, 25, 50, 100]" 
-      showFirstLastButtons 
-      aria-label="Select page of employees">
-    </mat-paginator>
+    <div class="paginator-container">
+      <mat-paginator 
+        [pageSizeOptions]="[10, 25, 50, 100]" 
+        showFirstLastButtons 
+        aria-label="Select page of employees">
+      </mat-paginator>
+    </div>
   </div>
 </div>

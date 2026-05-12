@@ -53,7 +53,7 @@ export class EmployeeProfileComponent implements OnInit {
   }
 
   goBack(): void {
-    // Navigate back to list, state is preserved in the service
+
     this.router.navigate(['/employees']);
   }
 }

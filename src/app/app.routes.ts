@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
-  // Auth routes (no sidebar)
+
   {
     path: 'login',
     loadComponent: () =>
@@ -21,7 +21,6 @@ export const routes: Routes = [
     ],
   },
 
-  // App routes (with sidebar + topbar)
   {
     path: '',
     canActivate: [authGuard],
@@ -95,6 +94,5 @@ export const routes: Routes = [
     ],
   },
 
-  // Fallback
   { path: '**', redirectTo: '' },
 ];

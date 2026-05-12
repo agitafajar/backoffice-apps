@@ -11,8 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
-import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { EmployeeService } from '../../../core/services/employee.service';
+import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 
 @Component({
   selector: 'app-employee-add',
@@ -41,7 +41,6 @@ export class EmployeeAddComponent {
   private readonly employeeService = inject(EmployeeService);
   private readonly snackBar = inject(MatSnackBar);
 
-  // Groups and filtered groups
   readonly allGroups = ['Engineering', 'Product', 'Design', 'Marketing', 'Sales', 'HR', 'Finance', 'Operations', 'Legal', 'Customer Success'];
   filteredGroups = [...this.allGroups];
 
@@ -67,7 +66,7 @@ export class EmployeeAddComponent {
   onSubmit(): void {
     if (this.employeeForm.valid) {
       this.employeeService.addEmployee(this.employeeForm.value as any);
-      
+
       this.snackBar.open('Employee added successfully', 'Close', {
         duration: 3000,
         panelClass: ['success-snackbar']

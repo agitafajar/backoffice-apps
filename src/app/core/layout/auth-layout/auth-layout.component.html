@@ -1,21 +1,110 @@
 <div class="auth-layout">
-      <!-- Blue gradient left panel -->
-      <div class="auth-layout__left">
-        <div class="auth-layout__left-content">
-          <div class="auth-layout__brand">
-            <div class="auth-layout__logo">
-              <mat-icon class="auth-layout__logo-icon">business_center</mat-icon>
-            </div>
-            <h1 class="auth-layout__app-name">HR Nexus</h1>
-            <p class="auth-layout__tagline">
-              Streamline your workforce management with our enterprise-grade HR platform
-            </p>
-          </div>
+
+  <div class="auth-layout__left">
+
+    <div class="auth-layout__decor-circle auth-layout__decor-circle--top"></div>
+    <div class="auth-layout__decor-circle auth-layout__decor-circle--bottom"></div>
+
+    <div class="auth-layout__left-content">
+
+      <div class="auth-layout__brand">
+        <div class="auth-layout__logo">
+          <mat-icon class="auth-layout__logo-icon">business_center</mat-icon>
+        </div>
+        <div class="auth-layout__brand-text">
+          <span class="auth-layout__brand-name">HR Nexus</span>
+          <span class="auth-layout__brand-sub">Enterprise Suite</span>
         </div>
       </div>
 
-      <!-- Right panel with form -->
-      <div class="auth-layout__right">
-        <router-outlet />
+      <div class="auth-layout__hero">
+        <h1 class="auth-layout__hero-title">
+          Empowering<br />Your Workforce
+        </h1>
+        <p class="auth-layout__hero-desc">
+          Streamline HR processes and empower your organization with HR Nexus.
+        </p>
+      </div>
+
+      <div class="auth-layout__divider"></div>
+
+      <div class="auth-layout__features">
+        <div class="auth-layout__feature">
+          <div class="auth-layout__feature-icon">
+            <mat-icon>security</mat-icon>
+          </div>
+          <div class="auth-layout__feature-text">
+            <span class="auth-layout__feature-title">Secure & Reliable</span>
+            <span class="auth-layout__feature-desc">Bank-level security</span>
+          </div>
+        </div>
+        <div class="auth-layout__feature">
+          <div class="auth-layout__feature-icon">
+            <mat-icon>insights</mat-icon>
+          </div>
+          <div class="auth-layout__feature-text">
+            <span class="auth-layout__feature-title">Smart Analytics</span>
+            <span class="auth-layout__feature-desc">Data-driven insights</span>
+          </div>
+        </div>
+        <div class="auth-layout__feature">
+          <div class="auth-layout__feature-icon">
+            <mat-icon>people</mat-icon>
+          </div>
+          <div class="auth-layout__feature-text">
+            <span class="auth-layout__feature-title">People First</span>
+            <span class="auth-layout__feature-desc">Built for HR teams</span>
+          </div>
+        </div>
       </div>
     </div>
+
+    <div class="auth-layout__cityscape">
+      <svg viewBox="0 0 600 160" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+
+        <defs>
+          <linearGradient id="skyGlow" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(255,255,255,0)" />
+            <stop offset="100%" stop-color="rgba(255,255,255,0.05)" />
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="600" height="160" fill="url(#skyGlow)" />
+
+        <rect x="10" y="90" width="28" height="70" rx="2" fill="rgba(255,255,255,0.07)"/>
+        <rect x="42" y="60" width="22" height="100" rx="2" fill="rgba(255,255,255,0.05)"/>
+        <rect x="68" y="75" width="32" height="85" rx="2" fill="rgba(255,255,255,0.08)"/>
+        <rect x="104" y="40" width="18" height="120" rx="2" fill="rgba(255,255,255,0.06)"/>
+        <rect x="126" y="55" width="26" height="105" rx="2" fill="rgba(255,255,255,0.09)"/>
+        <rect x="156" y="70" width="20" height="90" rx="2" fill="rgba(255,255,255,0.05)"/>
+        <rect x="180" y="30" width="24" height="130" rx="2" fill="rgba(255,255,255,0.1)"/>
+        <rect x="208" y="50" width="30" height="110" rx="2" fill="rgba(255,255,255,0.07)"/>
+        <rect x="242" y="65" width="18" height="95" rx="2" fill="rgba(255,255,255,0.06)"/>
+        <rect x="264" y="45" width="22" height="115" rx="2" fill="rgba(255,255,255,0.08)"/>
+        <rect x="290" y="80" width="26" height="80" rx="2" fill="rgba(255,255,255,0.05)"/>
+        <rect x="320" y="35" width="20" height="125" rx="2" fill="rgba(255,255,255,0.09)"/>
+        <rect x="344" y="55" width="32" height="105" rx="2" fill="rgba(255,255,255,0.07)"/>
+        <rect x="380" y="70" width="18" height="90" rx="2" fill="rgba(255,255,255,0.06)"/>
+        <rect x="402" y="25" width="24" height="135" rx="2" fill="rgba(255,255,255,0.1)"/>
+        <rect x="430" y="60" width="28" height="100" rx="2" fill="rgba(255,255,255,0.05)"/>
+        <rect x="462" y="50" width="20" height="110" rx="2" fill="rgba(255,255,255,0.08)"/>
+        <rect x="486" y="75" width="26" height="85" rx="2" fill="rgba(255,255,255,0.06)"/>
+        <rect x="516" y="40" width="22" height="120" rx="2" fill="rgba(255,255,255,0.07)"/>
+        <rect x="542" y="65" width="30" height="95" rx="2" fill="rgba(255,255,255,0.09)"/>
+        <rect x="576" y="80" width="24" height="80" rx="2" fill="rgba(255,255,255,0.05)"/>
+
+        <rect x="115" y="52" width="4" height="3" rx="0.5" fill="rgba(255,255,255,0.15)"/>
+        <rect x="115" y="60" width="4" height="3" rx="0.5" fill="rgba(255,255,255,0.12)"/>
+        <rect x="185" y="42" width="4" height="3" rx="0.5" fill="rgba(255,255,255,0.15)"/>
+        <rect x="185" y="50" width="4" height="3" rx="0.5" fill="rgba(255,255,255,0.12)"/>
+        <rect x="185" y="58" width="4" height="3" rx="0.5" fill="rgba(255,255,255,0.1)"/>
+        <rect x="407" y="35" width="4" height="3" rx="0.5" fill="rgba(255,255,255,0.15)"/>
+        <rect x="407" y="43" width="4" height="3" rx="0.5" fill="rgba(255,255,255,0.12)"/>
+        <rect x="407" y="51" width="4" height="3" rx="0.5" fill="rgba(255,255,255,0.1)"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="auth-layout__right">
+    <router-outlet />
+  </div>
+</div>

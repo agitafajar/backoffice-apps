@@ -1,6 +1,123 @@
-<app-page-header title="Reports" subtitle="Generate and download HR reports." />
-    <div class="placeholder-card">
-      <mat-icon>assessment</mat-icon>
-      <h3>Reports & Analytics</h3>
-      <p>Reporting features coming soon.</p>
+<div class="page-container">
+
+  <app-page-header
+    title="Reports"
+    subtitle="Generate and download HR reports and analytics."
+  >
+    <div headerRight>
+
+      <div class="header-illustration">
+        <div class="illust-pie">
+          <svg viewBox="0 0 100 100">
+            <path d="M50 50 L50 10 A40 40 0 1 1 10 50 Z" fill="#3B82F6"/>
+            <path d="M50 50 L10 50 A40 40 0 0 1 50 10 Z" fill="#F59E0B"/>
+          </svg>
+        </div>
+        <div class="illust-paper"></div>
+        <div class="illust-paper-2"></div>
+      </div>
     </div>
+  </app-page-header>
+
+  <div class="stats-grid">
+    @for (stat of stats; track stat.label) {
+      <app-stat-card
+        [icon]="stat.icon"
+        [label]="stat.label"
+        [value]="stat.value"
+        [trend]="stat.trend"
+        [trendUp]="stat.trendUp"
+        [iconBg]="stat.iconBg"
+        [iconColor]="stat.iconColor"
+      />
+    }
+  </div>
+
+  <div class="filters-row">
+    <div class="filter-group">
+      <app-filter-select
+        icon="calendar_today"
+        [options]="dateOptions"
+        value="may-2024"
+        minWidth="260px"
+      />
+      <app-filter-select [options]="deptOptions" value="" />
+      <app-filter-select [options]="typeOptions" value="" />
+    </div>
+
+    <div class="filter-actions">
+      <button mat-flat-button color="primary" class="btn-primary">
+        <mat-icon>download</mat-icon>
+        Generate Report
+      </button>
+      <button mat-stroked-button class="btn-outline">
+        <mat-icon>schedule</mat-icon>
+        Schedule Report
+      </button>
+    </div>
+  </div>
+
+  <div class="section-container">
+    <h3 class="section-title">Popular Reports</h3>
+
+    <div class="popular-grid">
+      @for (report of popularReports; track report.title) {
+        <div class="popular-card">
+          <div class="popular-icon" [ngClass]="'icon-' + report.colorClass">
+            <mat-icon>{{ report.icon }}</mat-icon>
+          </div>
+          <h4 class="popular-title">{{ report.title }}</h4>
+          <p class="popular-desc">{{ report.desc }}</p>
+          <button class="popular-btn" [ngClass]="'btn-' + report.colorClass">
+            <mat-icon>download</mat-icon>
+            Download
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="charts-grid">
+
+    <div class="chart-card">
+      <div class="card-header space-between">
+        <h3 class="card-title">Employee Growth Trend</h3>
+        <div class="chart-filter">
+          <select>
+            <option>This Year</option>
+          </select>
+          <mat-icon>expand_more</mat-icon>
+        </div>
+      </div>
+      <div class="card-body">
+        <canvas #growthChart class="chart-canvas"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="card-header space-between">
+        <h3 class="card-title">Employees by Department</h3>
+        <a href="javascript:void(0)" class="view-details">View Details</a>
+      </div>
+      <div class="card-body donut-layout">
+        <div class="donut-container">
+          <svg viewBox="0 0 160 160" class="donut-svg">
+            @for (arc of donutArcs(); track $index) {
+              <path [attr.d]="arc.path" fill="none" [attr.stroke]="arc.color" stroke-width="32" stroke-linecap="butt" />
+            }
+          </svg>
+        </div>
+
+        <div class="donut-legend">
+          @for (dept of departmentData; track dept.name) {
+            <div class="legend-item">
+              <span class="legend-dot" [style.background]="dept.color"></span>
+              <span class="legend-name">{{ dept.name }}</span>
+              <span class="legend-val">{{ dept.count }} ({{ dept.percent | number:'1.1-1' }}%)</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

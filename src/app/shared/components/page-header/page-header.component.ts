@@ -10,5 +10,5 @@ import { CommonModule } from '@angular/common';
 })
 export class PageHeaderComponent {
   @Input({ required: true }) title!: string;
-  @Input() subtitle?: string;
+  @Input() subtitle = '';
 }

@@ -5,26 +5,27 @@ import { Employee, EmployeeStatus } from '../models/employee.model';
   providedIn: 'root'
 })
 export class EmployeeService {
-  // Main data store
+
   private readonly _employees = signal<Employee[]>(this.generateMockData(105));
-  
-  // Public readonly access to all employees
+
   readonly employees = this._employees.asReadonly();
 
-  // Preserved state for list view
   public currentSearchUsername = signal<string>('');
   public currentSearchGroup = signal<string>('');
   public currentStatusFilter = signal<EmployeeStatus | ''>('');
   public currentPageIndex = signal<number>(0);
   public currentSort = signal<{active: string, direction: 'asc'|'desc'|''}>({ active: '', direction: '' });
 
-  // Computed state for the data table
   readonly filteredEmployees = computed(() => {
     let result = this._employees();
 
     const searchUser = this.currentSearchUsername().toLowerCase().trim();
     if (searchUser) {
-      result = result.filter(e => e.username.toLowerCase().includes(searchUser));
+      result = result.filter(e => 
+        e.username.toLowerCase().includes(searchUser) ||
+        (e.firstName + ' ' + e.lastName).toLowerCase().includes(searchUser) ||
+        e.email.toLowerCase().includes(searchUser)
+      );
     }
 
     const searchGroup = this.currentSearchGroup().toLowerCase().trim();
@@ -87,13 +88,13 @@ export class EmployeeService {
     const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzales', 'Wilson', 'Anderson', 'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin'];
     const groups = ['Engineering', 'Product', 'Design', 'Marketing', 'Sales', 'HR', 'Finance', 'Operations', 'Legal', 'Customer Success'];
     const statuses: EmployeeStatus[] = ['Active', 'Active', 'Active', 'Inactive', 'On Leave', 'Onboarding'];
-    
+
     const employees: Employee[] = [];
 
     for (let i = 0; i < count; i++) {
       const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
       const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-      
+
       employees.push({
         id: crypto.randomUUID(),
         username: `${firstName.toLowerCase()}.${lastName.toLowerCase()}${Math.floor(Math.random() * 1000)}`,
@@ -101,10 +102,10 @@ export class EmployeeService {
         lastName,
         email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@hrnexus.com`,
         birthDate: new Date(1970 + Math.floor(Math.random() * 30), Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1),
-        basicSalary: 4000000 + Math.floor(Math.random() * 20000000), // Random IDR between 4jt and 24jt
+        basicSalary: 4000000 + Math.floor(Math.random() * 20000000), 
         status: statuses[Math.floor(Math.random() * statuses.length)],
         group: groups[Math.floor(Math.random() * groups.length)],
-        description: new Date() // Fulfilling the "datetime" type requirement for description
+        description: new Date() 
       });
     }
 

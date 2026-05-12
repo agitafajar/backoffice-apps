@@ -1,0 +1,13 @@
+<div class="filter-input-wrapper" [style.min-width]="minWidth">
+  <mat-icon class="prefix-icon">{{ icon }}</mat-icon>
+  <input
+    type="text"
+    class="filter-input"
+    [placeholder]="placeholder"
+    [value]="value"
+    (input)="onInput($event)"
+  />
+  @if (showSuffix) {
+    <mat-icon class="suffix-icon">{{ suffixIcon }}</mat-icon>
+  }
+</div>

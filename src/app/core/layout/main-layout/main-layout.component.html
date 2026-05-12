@@ -1,4 +1,4 @@
-<!-- Mobile overlay -->
+
     @if (sidebarOpen()) {
       <div
         class="sidebar-overlay lg:hidden"
@@ -6,7 +6,6 @@
       ></div>
     }
 
-    <!-- Sidebar -->
     <div
       class="sidebar-wrapper"
       [class.sidebar-wrapper--open]="sidebarOpen()"
@@ -14,7 +13,6 @@
       <app-sidebar />
     </div>
 
-    <!-- Main content area -->
     <div class="main-content">
       <app-topbar (menuToggle)="toggleSidebar()" />
       <main class="main-content__body">
