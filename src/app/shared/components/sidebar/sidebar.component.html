@@ -1,0 +1,56 @@
+<aside class="sidebar">
+      <!-- Brand -->
+      <div class="sidebar__brand">
+        <div class="sidebar__logo">
+          <mat-icon class="sidebar__logo-icon">business_center</mat-icon>
+        </div>
+        <div class="sidebar__brand-text">
+          <span class="sidebar__brand-name">HR Nexus</span>
+          <span class="sidebar__brand-sub">Enterprise Suite</span>
+        </div>
+      </div>
+
+      <!-- Add Employee CTA -->
+      <div class="px-4 mb-6">
+        <button
+          mat-flat-button
+          color="primary"
+          class="sidebar__add-btn w-full"
+          routerLink="/employees/add"
+        >
+          <mat-icon>add</mat-icon>
+          <span>Add Employee</span>
+        </button>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="sidebar__nav">
+        @for (item of navItems; track item.route) {
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="sidebar__nav-item--active"
+            class="sidebar__nav-item"
+            matRipple
+          >
+            <mat-icon class="sidebar__nav-icon">{{ item.icon }}</mat-icon>
+            <span class="sidebar__nav-label">{{ item.label }}</span>
+            @if (item.badge) {
+              <span class="sidebar__badge">{{ item.badge }}</span>
+            }
+          </a>
+        }
+      </nav>
+
+      <!-- Bottom nav -->
+      <div class="sidebar__bottom">
+        <a
+          routerLink="/settings"
+          routerLinkActive="sidebar__nav-item--active"
+          class="sidebar__nav-item"
+          matRipple
+        >
+          <mat-icon class="sidebar__nav-icon">settings</mat-icon>
+          <span class="sidebar__nav-label">Settings</span>
+        </a>
+      </div>
+    </aside>

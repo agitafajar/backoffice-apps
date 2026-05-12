@@ -1,0 +1,19 @@
+@if (src) {
+      <img
+        [src]="src"
+        [alt]="name"
+        class="avatar"
+        [style.width.px]="size"
+        [style.height.px]="size"
+      />
+    } @else {
+      <div
+        class="avatar avatar--initials"
+        [style.width.px]="size"
+        [style.height.px]="size"
+        [style.fontSize.px]="size * 0.38"
+        [style.backgroundColor]="bgColor"
+      >
+        {{ initials }}
+      </div>
+    }

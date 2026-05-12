@@ -1,0 +1,260 @@
+// ============================================================
+// HR Nexus — Global Styles
+// Custom Material Theme + Tailwind + Design System
+// ============================================================
+
+// Angular Material must be @use'd FIRST (before any other rules)
+@use '@angular/material' as mat;
+
+// ── Custom Palette ──────────────────────────────────────────
+$hr-nexus-blue: (
+  50: #E3F2FD,
+  100: #BBDEFB,
+  200: #90CAF9,
+  300: #64B5F6,
+  400: #42A5F5,
+  500: #1976D2,
+  600: #1565C0,
+  700: #0D47A1,
+  800: #0A3A82,
+  900: #072D63,
+  A100: #82B1FF,
+  A200: #448AFF,
+  A400: #2979FF,
+  A700: #2962FF,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: rgba(0, 0, 0, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(0, 0, 0, 0.87),
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+$hr-nexus-accent: (
+  50: #FFF3E0,
+  100: #FFE0B2,
+  200: #FFCC80,
+  300: #FFB74D,
+  400: #FFA726,
+  500: #FF9800,
+  600: #FB8C00,
+  700: #F57C00,
+  800: #EF6C00,
+  900: #E65100,
+  A100: #FFD180,
+  A200: #FFAB40,
+  A400: #FF9100,
+  A700: #FF6D00,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: rgba(0, 0, 0, 0.87),
+    500: rgba(0, 0, 0, 0.87),
+    600: rgba(0, 0, 0, 0.87),
+    700: rgba(0, 0, 0, 0.87),
+    800: white,
+    900: white,
+    A100: rgba(0, 0, 0, 0.87),
+    A200: rgba(0, 0, 0, 0.87),
+    A400: rgba(0, 0, 0, 0.87),
+    A700: rgba(0, 0, 0, 0.87),
+  )
+);
+
+// ── Theme Definition ────────────────────────────────────────
+$hr-nexus-primary: mat.define-palette($hr-nexus-blue, 600);
+$hr-nexus-accent-palette: mat.define-palette($hr-nexus-accent, A200, A100, A400);
+$hr-nexus-warn: mat.define-palette(mat.$red-palette);
+
+$hr-nexus-typography: mat.define-typography-config(
+  $font-family: 'Inter, system-ui, -apple-system, sans-serif',
+  $headline-1: mat.define-typography-level(1.875rem, 2.25rem, 700),
+  $headline-2: mat.define-typography-level(1.5rem, 2rem, 700),
+  $headline-3: mat.define-typography-level(1.25rem, 1.75rem, 600),
+  $headline-4: mat.define-typography-level(1.125rem, 1.75rem, 600),
+  $headline-5: mat.define-typography-level(1rem, 1.5rem, 600),
+  $headline-6: mat.define-typography-level(0.875rem, 1.25rem, 600),
+  $body-1: mat.define-typography-level(0.875rem, 1.5rem, 400),
+  $body-2: mat.define-typography-level(0.8125rem, 1.25rem, 400),
+  $subtitle-1: mat.define-typography-level(0.875rem, 1.5rem, 500),
+  $subtitle-2: mat.define-typography-level(0.8125rem, 1.25rem, 500),
+  $caption: mat.define-typography-level(0.75rem, 1rem, 400),
+  $button: mat.define-typography-level(0.875rem, 1.25rem, 500),
+);
+
+$hr-nexus-theme: mat.define-light-theme((
+  color: (
+    primary: $hr-nexus-primary,
+    accent: $hr-nexus-accent-palette,
+    warn: $hr-nexus-warn,
+  ),
+  typography: $hr-nexus-typography,
+  density: -1,
+));
+
+@include mat.core();
+@include mat.all-component-themes($hr-nexus-theme);
+
+// Tailwind directives AFTER @use and @include
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// ============================================================
+// Base Styles
+// ============================================================
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  color: #1E293B;
+  background-color: #F5F5F5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ============================================================
+// Material Overrides
+// ============================================================
+
+// Form fields
+.mat-mdc-form-field {
+  width: 100%;
+
+  .mdc-text-field--outlined {
+    border-radius: 8px !important;
+  }
+
+  .mat-mdc-form-field-subscript-wrapper {
+    margin-top: 2px;
+  }
+}
+
+// Buttons
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-flat-button,
+.mat-mdc-stroked-button {
+  border-radius: 8px !important;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+// Cards
+.mat-mdc-card {
+  border-radius: 12px !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+// Table
+.mat-mdc-table {
+  .mat-mdc-header-row {
+    background-color: #FAFAFA;
+
+    .mat-mdc-header-cell {
+      font-weight: 600;
+      font-size: 0.75rem;
+      color: #64748B;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid #E0E0E0;
+    }
+  }
+
+  .mat-mdc-row {
+    &:hover {
+      background-color: #FAFAFA;
+    }
+
+    .mat-mdc-cell {
+      font-size: 0.875rem;
+      color: #1E293B;
+      border-bottom: 1px solid #F5F5F5;
+    }
+  }
+}
+
+// Paginator
+.mat-mdc-paginator {
+  font-size: 0.8125rem;
+  color: #64748B;
+}
+
+// Menu
+.mat-mdc-menu-panel {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
+}
+
+// Snackbar
+.mat-mdc-snack-bar-container {
+  border-radius: 8px !important;
+
+  &.success-snackbar {
+    --mdc-snackbar-container-color: #16A34A;
+    --mdc-snackbar-supporting-text-color: white;
+    --mat-snack-bar-button-color: white;
+  }
+}
+
+// Dialog
+.mat-mdc-dialog-container {
+  border-radius: 12px !important;
+}
+
+// Chips
+.mat-mdc-chip {
+  border-radius: 16px !important;
+  font-size: 0.75rem;
+}
+
+// ============================================================
+// Utility Classes
+// ============================================================
+
+.page-container {
+  padding: 24px 32px;
+  max-width: 1280px;
+}
+
+.section-card {
+  background: white;
+  border: 1px solid #E0E0E0;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+// Scrollbar styling
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}

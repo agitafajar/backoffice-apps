@@ -1,0 +1,150 @@
+<div class="employee-add">
+      <app-page-header
+        title="Add New Employee"
+        subtitle="Enter the employee's information to create their profile in the system."
+      />
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-sections">
+
+        <!-- Personal Information -->
+        <section class="form-section">
+          <h3 class="form-section__title">Personal Information</h3>
+
+          <div class="form-grid form-grid--2col">
+            <!-- First Name -->
+            <mat-form-field appearance="outline">
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="firstName" id="add-first-name" />
+              <mat-error>First name is required</mat-error>
+            </mat-form-field>
+
+            <!-- Last Name -->
+            <mat-form-field appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input matInput formControlName="lastName" id="add-last-name" />
+              <mat-error>Last name is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-grid form-grid--2col">
+            <!-- Email -->
+            <mat-form-field appearance="outline">
+              <mat-label>Email Address</mat-label>
+              <input matInput formControlName="email" type="email" id="add-email" />
+              @if (form.get('email')?.hasError('required')) {
+                <mat-error>Email is required</mat-error>
+              } @else if (form.get('email')?.hasError('email')) {
+                <mat-error>Enter a valid email</mat-error>
+              }
+            </mat-form-field>
+
+            <!-- Phone (optional) -->
+            <div></div>
+          </div>
+
+          <div class="form-grid form-grid--2col">
+            <!-- Phone -->
+            <mat-form-field appearance="outline">
+              <mat-label>Phone Number</mat-label>
+              <input matInput formControlName="phone" id="add-phone" />
+            </mat-form-field>
+
+            <!-- Date of Birth -->
+            <mat-form-field appearance="outline">
+              <mat-label>Date of Birth</mat-label>
+              <input matInput [matDatepicker]="dob" formControlName="dateOfBirth" id="add-dob" />
+              <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+              <mat-datepicker #dob></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </section>
+
+        <!-- Job Details -->
+        <section class="form-section">
+          <h3 class="form-section__title">Job Details</h3>
+
+          <div class="form-grid form-grid--2col">
+            <!-- Department -->
+            <mat-form-field appearance="outline">
+              <mat-label>Department</mat-label>
+              <mat-select formControlName="department" id="add-department">
+                <mat-option value="">Select department</mat-option>
+                <mat-option value="Engineering">Engineering</mat-option>
+                <mat-option value="Design & Product">Design & Product</mat-option>
+                <mat-option value="Marketing">Marketing</mat-option>
+                <mat-option value="Sales">Sales</mat-option>
+                <mat-option value="HR">Human Resources</mat-option>
+                <mat-option value="Finance">Finance</mat-option>
+              </mat-select>
+              <mat-error>Department is required</mat-error>
+            </mat-form-field>
+
+            <!-- Job Title -->
+            <mat-form-field appearance="outline">
+              <mat-label>Job Title</mat-label>
+              <input matInput formControlName="jobTitle" id="add-job-title" />
+              <mat-error>Job title is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-grid form-grid--2col">
+            <!-- Start Date -->
+            <mat-form-field appearance="outline">
+              <mat-label>Start Date</mat-label>
+              <input matInput [matDatepicker]="startPicker" formControlName="startDate" id="add-start-date" />
+              <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+              <mat-datepicker #startPicker></mat-datepicker>
+              <mat-error>Start date is required</mat-error>
+            </mat-form-field>
+
+            <!-- Employment Type -->
+            <mat-form-field appearance="outline">
+              <mat-label>Employment Type</mat-label>
+              <mat-select formControlName="employmentType" id="add-employment-type">
+                <mat-option value="Full-Time">Full-Time</mat-option>
+                <mat-option value="Part-Time">Part-Time</mat-option>
+                <mat-option value="Contract">Contract</mat-option>
+                <mat-option value="Intern">Intern</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </section>
+
+        <!-- Compensation -->
+        <section class="form-section">
+          <h3 class="form-section__title">Compensation</h3>
+
+          <div class="form-grid form-grid--2col">
+            <!-- Annual Base Salary -->
+            <mat-form-field appearance="outline">
+              <mat-label>Annual Base Salary</mat-label>
+              <span matPrefix class="salary-prefix">$&nbsp;</span>
+              <input matInput formControlName="annualBaseSalary" type="number" id="add-salary" />
+            </mat-form-field>
+
+            <!-- Pay Frequency -->
+            <mat-form-field appearance="outline">
+              <mat-label>Pay Frequency</mat-label>
+              <mat-select formControlName="payFrequency" id="add-pay-frequency">
+                <mat-option value="Monthly">Monthly</mat-option>
+                <mat-option value="Bi-weekly">Bi-weekly</mat-option>
+                <mat-option value="Weekly">Weekly</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </section>
+
+        <!-- Submit -->
+        <div class="form-actions">
+          <button
+            mat-flat-button
+            color="primary"
+            type="submit"
+            class="submit-btn"
+            id="btn-submit-employee"
+          >
+            Add Employee
+          </button>
+        </div>
+      </form>
+    </div>

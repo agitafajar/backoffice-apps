@@ -1,0 +1,48 @@
+<header class="topbar">
+      <div class="topbar__left">
+        <button
+          mat-icon-button
+          class="topbar__menu-btn lg:hidden"
+          (click)="menuToggle.emit()"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+        <h1 class="topbar__title">Employee Management</h1>
+      </div>
+
+      <div class="topbar__right">
+        <div class="topbar__search">
+          <mat-icon class="topbar__search-icon">search</mat-icon>
+          <input
+            type="text"
+            class="topbar__search-input"
+            placeholder="Search..."
+            [(ngModel)]="searchQuery"
+          />
+        </div>
+
+        <button mat-icon-button class="topbar__action">
+          <mat-icon>notifications_none</mat-icon>
+        </button>
+        <button mat-icon-button class="topbar__action">
+          <mat-icon>help_outline</mat-icon>
+        </button>
+
+        <div class="topbar__avatar">
+          <div class="topbar__avatar-circle" [matMenuTriggerFor]="userMenu">
+            <mat-icon>person</mat-icon>
+          </div>
+          <mat-menu #userMenu="matMenu">
+            <button mat-menu-item>
+              <mat-icon>account_circle</mat-icon>
+              <span>My Profile</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="logout()" class="text-error">
+              <mat-icon>logout</mat-icon>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+    </header>

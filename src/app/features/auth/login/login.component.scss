@@ -1,0 +1,143 @@
+.login-card {
+      width: 100%;
+      max-width: 400px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      padding: 40px 36px 32px;
+    }
+
+    .login-card__header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .login-card__logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background: #1565C0;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+
+    .login-card__logo-icon {
+      color: white;
+      font-size: 26px;
+      width: 26px;
+      height: 26px;
+    }
+
+    .login-card__title {
+      font-size: 1.375rem;
+      font-weight: 700;
+      color: #1E293B;
+      margin: 0 0 4px;
+    }
+
+    .login-card__subtitle {
+      font-size: 0.8125rem;
+      color: #64748B;
+      margin: 0;
+    }
+
+    .login-card__form {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-label {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: #1E293B;
+      margin-bottom: 6px;
+    }
+
+    .form-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .form-link {
+      font-size: 0.75rem;
+      color: #1565C0;
+      text-decoration: none;
+      font-weight: 500;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .login-card__checkbox {
+      margin: 4px 0 16px;
+
+      ::ng-deep .mdc-label {
+        font-size: 0.8125rem;
+        color: #64748B;
+      }
+    }
+
+    .login-card__submit {
+      width: 100%;
+      height: 44px !important;
+      font-size: 0.9375rem !important;
+      font-weight: 600 !important;
+      border-radius: 8px !important;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .login-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: #64748B;
+    }
+
+    .login-card__footer-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+    }
+
+    .login-card__env {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.6875rem;
+      color: #94A3B8;
+      margin-top: 16px;
+    }
+
+    .login-card__env-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22C55E;
+    }
+
+    // Material prefix icon alignment
+    ::ng-deep .mat-mdc-form-field-icon-prefix {
+      padding-right: 8px !important;
+
+      .mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+        color: #94A3B8;
+      }
+    }

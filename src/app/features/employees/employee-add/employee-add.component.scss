@@ -1,0 +1,63 @@
+.employee-add {
+      max-width: 720px;
+    }
+
+    .form-sections {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-section {
+      background: white;
+      border: 1px solid #E0E0E0;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .form-section__title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1E293B;
+      margin: 0 0 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #F5F5F5;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 0 20px;
+    }
+
+    .form-grid--2col {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .salary-prefix {
+      font-size: 0.875rem;
+      color: #64748B;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-start;
+      padding-top: 8px;
+    }
+
+    .submit-btn {
+      height: 42px !important;
+      padding: 0 28px !important;
+      font-size: 0.875rem !important;
+      font-weight: 600 !important;
+      border-radius: 8px !important;
+    }
+
+    @media (max-width: 640px) {
+      .form-grid--2col {
+        grid-template-columns: 1fr;
+      }
+
+      .form-section {
+        padding: 16px;
+      }
+    }

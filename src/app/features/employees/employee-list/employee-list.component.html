@@ -1,0 +1,160 @@
+<div class="employee-list">
+      <!-- Page Header -->
+      <app-page-header
+        title="Directory"
+        subtitle="Manage and view all active and onboarding personnel."
+      >
+        <button
+          mat-flat-button
+          color="primary"
+          routerLink="/employees/add"
+          id="btn-add-employee"
+        >
+          <mat-icon>add</mat-icon>
+          Add Employee
+        </button>
+      </app-page-header>
+
+      <!-- Filters bar -->
+      <div class="filters-bar">
+        <div class="filters-bar__search">
+          <mat-icon class="filters-bar__search-icon">search</mat-icon>
+          <input
+            type="text"
+            class="filters-bar__search-input"
+            placeholder="Search by name, role, or email..."
+            [ngModel]="searchQuery"
+            (ngModelChange)="onSearchChange($event)"
+            id="employee-search"
+          />
+        </div>
+
+        <div class="filters-bar__selects">
+          <div class="filter-chip" [matMenuTriggerFor]="deptMenu">
+            <mat-icon class="filter-chip__icon">filter_list</mat-icon>
+            <span>{{ selectedDepartment || 'Department' }}</span>
+            <mat-icon class="filter-chip__arrow">expand_more</mat-icon>
+          </div>
+          <mat-menu #deptMenu="matMenu">
+            <button mat-menu-item (click)="onDepartmentChange('')">All Departments</button>
+            @for (dept of employeeService.departments(); track dept) {
+              <button mat-menu-item (click)="onDepartmentChange(dept)">{{ dept }}</button>
+            }
+          </mat-menu>
+
+          <div class="filter-chip" [matMenuTriggerFor]="statusMenu">
+            <mat-icon class="filter-chip__icon">tune</mat-icon>
+            <span>{{ selectedStatus || 'Status' }}</span>
+            <mat-icon class="filter-chip__arrow">expand_more</mat-icon>
+          </div>
+          <mat-menu #statusMenu="matMenu">
+            <button mat-menu-item (click)="onStatusChange('')">All Statuses</button>
+            <button mat-menu-item (click)="onStatusChange('Active')">Active</button>
+            <button mat-menu-item (click)="onStatusChange('Onboarding')">Onboarding</button>
+            <button mat-menu-item (click)="onStatusChange('Leave')">Leave</button>
+          </mat-menu>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th class="data-table__th">
+                Name
+                <mat-icon class="data-table__sort-icon">arrow_upward</mat-icon>
+              </th>
+              <th class="data-table__th">Role</th>
+              <th class="data-table__th">Department</th>
+              <th class="data-table__th">Status</th>
+              <th class="data-table__th data-table__th--actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (employee of employeeService.paginatedEmployees(); track employee.id) {
+              <tr
+                class="data-table__row"
+                [routerLink]="['/employees', employee.id]"
+              >
+                <td class="data-table__td">
+                  <div class="employee-cell">
+                    <app-avatar
+                      [name]="employee.firstName + ' ' + employee.lastName"
+                      [src]="employee.avatarUrl"
+                      [size]="36"
+                    />
+                    <div class="employee-cell__info">
+                      <span class="employee-cell__name">
+                        {{ employee.firstName }} {{ employee.lastName }}
+                      </span>
+                      <span class="employee-cell__email">{{ employee.email }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="data-table__td">{{ employee.jobTitle }}</td>
+                <td class="data-table__td">{{ employee.department }}</td>
+                <td class="data-table__td">
+                  <app-status-badge [status]="employee.status" />
+                </td>
+                <td class="data-table__td data-table__td--actions" (click)="$event.stopPropagation()">
+                  <button mat-icon-button [matMenuTriggerFor]="actionMenu" class="action-btn">
+                    <mat-icon>more_horiz</mat-icon>
+                  </button>
+                  <mat-menu #actionMenu="matMenu">
+                    <button mat-menu-item [routerLink]="['/employees', employee.id]">
+                      <mat-icon>visibility</mat-icon> View Profile
+                    </button>
+                    <button mat-menu-item>
+                      <mat-icon>edit</mat-icon> Edit
+                    </button>
+                    <button mat-menu-item class="text-error">
+                      <mat-icon>delete</mat-icon> Remove
+                    </button>
+                  </mat-menu>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <span class="pagination__info">
+          Showing {{ paginationStart }} to {{ paginationEnd }} of {{ employeeService.totalFiltered() }} entries
+        </span>
+        <div class="pagination__controls">
+          <button
+            mat-icon-button
+            [disabled]="employeeService.currentPage() <= 1"
+            (click)="employeeService.setPage(employeeService.currentPage() - 1)"
+          >
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+
+          @for (page of pages; track page) {
+            @if (page === -1) {
+              <span class="pagination__dots">...</span>
+            } @else {
+              <button
+                mat-icon-button
+                class="pagination__page"
+                [class.pagination__page--active]="page === employeeService.currentPage()"
+                (click)="employeeService.setPage(page)"
+              >
+                {{ page }}
+              </button>
+            }
+          }
+
+          <button
+            mat-icon-button
+            [disabled]="employeeService.currentPage() >= employeeService.totalPages()"
+            (click)="employeeService.setPage(employeeService.currentPage() + 1)"
+          >
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>

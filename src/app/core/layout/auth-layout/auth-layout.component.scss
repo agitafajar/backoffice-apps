@@ -1,0 +1,100 @@
+.auth-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .auth-layout__left {
+      display: none;
+      flex: 1;
+      background: linear-gradient(135deg, #1565C0 0%, #0D47A1 50%, #1976D2 100%);
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        top: -100px;
+        left: -100px;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.03);
+        bottom: -80px;
+        right: -80px;
+      }
+    }
+
+    .auth-layout__left-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .auth-layout__brand {
+      text-align: center;
+      color: white;
+    }
+
+    .auth-layout__logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+
+    .auth-layout__app-name {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 0 12px;
+    }
+
+    .auth-layout__tagline {
+      font-size: 1rem;
+      opacity: 0.85;
+      max-width: 320px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .auth-layout__right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: #F5F5F5;
+    }
+
+    @media (min-width: 768px) {
+      .auth-layout__left {
+        display: flex;
+      }
+
+      .auth-layout__right {
+        flex: none;
+        width: 50%;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .auth-layout__right {
+        width: 45%;
+      }
+    }

@@ -1,0 +1,108 @@
+.topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      padding: 0 24px;
+      background: #FFFFFF;
+      border-bottom: 1px solid #E0E0E0;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar__left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .topbar__title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #1E293B;
+      margin: 0;
+    }
+
+    .topbar__menu-btn {
+      display: none;
+    }
+
+    .topbar__right {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .topbar__search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: #F5F5F5;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+      margin-right: 8px;
+
+      &:focus-within {
+        background: #FFFFFF;
+        border-color: #1565C0;
+        box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.1);
+      }
+    }
+
+    .topbar__search-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      color: #94A3B8;
+    }
+
+    .topbar__search-input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 0.8125rem;
+      color: #1E293B;
+      width: 160px;
+      font-family: inherit;
+
+      &::placeholder {
+        color: #94A3B8;
+      }
+    }
+
+    .topbar__action {
+      color: #64748B !important;
+
+      &:hover {
+        color: #1E293B !important;
+      }
+    }
+
+    .topbar__avatar {
+      margin-left: 8px;
+    }
+
+    .topbar__avatar-circle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #E3F2FD;
+      color: #1565C0;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1023px) {
+      .topbar__menu-btn {
+        display: flex;
+      }
+
+      .topbar__search {
+        display: none;
+      }
+    }

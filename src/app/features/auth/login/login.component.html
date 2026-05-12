@@ -1,0 +1,90 @@
+<div class="login-card">
+      <!-- Logo -->
+      <div class="login-card__header">
+        <div class="login-card__logo">
+          <mat-icon class="login-card__logo-icon">business_center</mat-icon>
+        </div>
+        <h1 class="login-card__title">HR Nexus</h1>
+        <p class="login-card__subtitle">Sign in to your enterprise account</p>
+      </div>
+
+      <!-- Form -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-card__form">
+        <!-- Employee ID / Email -->
+        <div class="form-group">
+          <label class="form-label">Employee ID or Email</label>
+          <mat-form-field appearance="outline">
+            <mat-icon matPrefix>person_outline</mat-icon>
+            <input
+              matInput
+              formControlName="email"
+              placeholder="e.g. jdoe@company.com"
+              id="login-email"
+            />
+            @if (loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
+              <mat-error>Email is required</mat-error>
+            }
+            @if (loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched) {
+              <mat-error>Enter a valid email address</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <div class="form-label-row">
+            <label class="form-label">Password</label>
+            <a href="javascript:void(0)" class="form-link">Forgot password?</a>
+          </div>
+          <mat-form-field appearance="outline">
+            <mat-icon matPrefix>lock_outline</mat-icon>
+            <input
+              matInput
+              [type]="hidePassword ? 'password' : 'text'"
+              formControlName="password"
+              placeholder="••••••••"
+              id="login-password"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="hidePassword = !hidePassword"
+            >
+              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
+              <mat-error>Password is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <!-- Keep signed in -->
+        <mat-checkbox formControlName="rememberMe" class="login-card__checkbox">
+          Keep me signed in
+        </mat-checkbox>
+
+        <!-- Submit -->
+        <button
+          mat-flat-button
+          color="primary"
+          class="login-card__submit"
+          type="submit"
+          id="login-submit"
+        >
+          Sign In
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </form>
+
+      <!-- Footer -->
+      <div class="login-card__footer">
+        <mat-icon class="login-card__footer-icon">help_outline</mat-icon>
+        <span>Need help? <a href="javascript:void(0)" class="form-link">Contact IT Support</a></span>
+      </div>
+
+      <div class="login-card__env">
+        <span class="login-card__env-dot"></span>
+        Production Environment
+      </div>
+    </div>
